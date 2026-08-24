@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#203229">
+  <title>CPA 错题复习</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <button class="brand" data-action="home">CPA 错题复习</button>
+      <div class="top-actions">
+        <button class="icon-button" data-action="search" aria-label="搜索" title="搜索">⌕</button>
+        <button class="icon-button" data-action="filters" aria-label="筛选" title="筛选">≡</button>
+      </div>
+    </header>
+
+    <main id="main" class="main" aria-live="polite">
+      <div class="loading">正在载入题库…</div>
+    </main>
+
+    <nav class="bottom-nav" aria-label="主导航">
+      <button data-view="practice" class="active"><span>✎</span>刷题</button>
+      <button data-view="catalog"><span>☷</span>目录</button>
+      <button data-view="favorites"><span>☆</span>收藏</button>
+      <button data-view="progress"><span>◫</span>进度</button>
+    </nav>
+  </div>
+
+  <dialog id="search-dialog" class="sheet">
+    <form method="dialog" class="sheet-head">
+      <h2>搜索</h2><button class="icon-button" value="cancel" aria-label="关闭">×</button>
+    </form>
+    <input id="search-input" class="text-input" type="search" placeholder="题干、知识点、错因" autocomplete="off">
+    <div id="search-results" class="search-results"></div>
+  </dialog>
+
+  <dialog id="filter-dialog" class="sheet">
+    <form method="dialog" class="sheet-head">
+      <h2>筛选</h2><button class="icon-button" value="cancel" aria-label="关闭">×</button>
+    </form>
+    <div id="filter-content"></div>
+  </dialog>
+
+  <input id="import-file" type="file" accept="application/json" hidden>
+  <script src="app.js" defer></script>
+</body>
+</html>

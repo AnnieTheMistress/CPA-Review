@@ -1,0 +1,344 @@
+const STORAGE_KEY = "cpa-review-state-v1";
+
+const app = {
+  data: [],
+  byId: new Map(),
+  view: "practice",
+  queue: [],
+  cursor: 0,
+  selected: new Set(),
+  submitted: false,
+  reveal: false,
+  catalog: { subject: null, chapter: null, knowledge: null },
+  filters: { subject: "", chapter: "", type: "", status: "" },
+  state: loadState(),
+};
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { questions: {} };
+  } catch {
+    return { questions: {} };
+  }
+}
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(app.state));
+}
+
+function progressFor(id) {
+  return app.state.questions[id] || { attempts: 0, correct: 0, mastery: "未掌握", favorite: false, retry: false };
+}
+
+function updateProgress(id, patch) {
+  app.state.questions[id] = { ...progressFor(id), ...patch };
+  saveState();
+}
+
+function escapeHtml(value = "") {
+  return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+}
+
+function inlineMarkdown(value) {
+  return escapeHtml(value)
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/`(.+?)`/g, "<code>$1</code>");
+}
+
+function markdown(value = "") {
+  const lines = value.replace(/\r/g, "").split("\n");
+  const output = [];
+  let paragraph = [];
+  const flush = () => {
+    if (paragraph.length) output.push(`<p>${paragraph.map(inlineMarkdown).join("<br>")}</p>`);
+    paragraph = [];
+  };
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (/^\|.*\|$/.test(line.trim()) && /^\|?\s*:?-+/.test((lines[index + 1] || "").trim())) {
+      flush();
+      const table = [line, lines[index + 1]];
+      index += 2;
+      while (index < lines.length && /^\|.*\|$/.test(lines[index].trim())) table.push(lines[index++]);
+      index -= 1;
+      const rows = table.filter((_, row) => row !== 1).map(row => row.trim().replace(/^\||\|$/g, "").split("|").map(cell => cell.trim()));
+      output.push(`<div class="table-scroll"><table>${rows.map((cells, row) => `<tr>${cells.map(cell => row === 0 ? `<th>${inlineMarkdown(cell)}</th>` : `<td>${inlineMarkdown(cell)}</td>`).join("")}</tr>`).join("")}</table></div>`);
+    } else if (!line.trim()) {
+      flush();
+    } else {
+      paragraph.push(line);
+    }
+  }
+  flush();
+  return output.join("");
+}
+
+function filteredQuestions(extra = {}) {
+  const filters = { ...app.filters, ...extra };
+  return app.data.filter(question => {
+    const progress = progressFor(question.id);
+    return (!filters.subject || question.subject === filters.subject)
+      && (!filters.chapter || question.chapter === filters.chapter)
+      && (!filters.type || question.type === filters.type)
+      && (!filters.status || (filters.status === "收藏" ? progress.favorite : filters.status === "待重做" ? progress.retry : progress.mastery === filters.status));
+  });
+}
+
+function resetQuestionState() {
+  app.selected = new Set();
+  app.submitted = false;
+  app.reveal = false;
+}
+
+function setQueue(questions, startId = null) {
+  app.queue = questions.map(item => item.id);
+  app.cursor = Math.max(0, startId ? app.queue.indexOf(startId) : 0);
+  resetQuestionState();
+}
+
+function currentQuestion() {
+  if (!app.queue.length) setQueue(filteredQuestions());
+  return app.byId.get(app.queue[app.cursor]);
+}
+
+function renderQuestionText(question) {
+  let text = question.question;
+  for (const option of question.options) {
+    const pattern = new RegExp(`(^|\\n)${option.key}[.．、]\\s*[\\s\\S]*?(?=(\\n[A-H][.．、])|$)`, "m");
+    text = text.replace(pattern, "");
+  }
+  return markdown(text.trim());
+}
+
+function answerPanel(question) {
+  if (!app.submitted && !app.reveal) return `<div class="answer-placeholder">提交答案后显示核对与解析</div>`;
+  const correct = sameKeys([...app.selected], question.correctKeys);
+  const result = question.uncertain
+    ? `<div class="result uncertain">答案标记存疑 · 原答案 ${escapeHtml(question.correctAnswer)}</div>`
+    : app.submitted
+      ? `<div class="result ${correct ? "" : "wrong"}">${correct ? "回答正确" : `回答错误 · 正确答案 ${escapeHtml(question.correctAnswer)}`}</div>`
+      : `<div class="result">参考答案 ${escapeHtml(question.correctAnswer || "见解析")}</div>`;
+  return `${result}
+    ${section("我的答案", question.myAnswer)}
+    ${section("我的错因", question.reason)}
+    ${section("核对意见", question.check)}
+    ${section("解析", question.analysis)}
+    <div class="answer-section"><h3>掌握状态</h3><div class="mastery-row">${["未掌握", "复习中", "已掌握"].map(value => `<button class="compact-button ${progressFor(question.id).mastery === value ? "active" : ""}" data-mastery="${value}">${value}</button>`).join("")}</div></div>`;
+}
+
+function section(title, content) {
+  return content ? `<section class="answer-section"><h3>${title}</h3><div class="markdown">${markdown(content)}</div></section>` : "";
+}
+
+function sameKeys(left, right) {
+  return [...left].sort().join("") === [...right].sort().join("");
+}
+
+function renderPractice() {
+  const question = currentQuestion();
+  if (!question) return renderEmpty("当前筛选下没有题目");
+  const progress = progressFor(question.id);
+  const options = question.options.map(option => {
+    const selected = app.selected.has(option.key);
+    const graded = app.submitted ? question.correctKeys.includes(option.key) ? "correct" : selected ? "wrong" : "" : "";
+    return `<button class="option ${selected ? "selected" : ""} ${graded}" data-option="${option.key}" ${app.submitted ? "disabled" : ""}><span class="option-key">${option.key}</span><span>${inlineMarkdown(option.text)}</span></button>`;
+  }).join("");
+  document.querySelector("#main").innerHTML = `<div class="practice">
+    <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
+    <div class="split-question">
+      <section class="question-pane">
+        <h1 class="question-title">${escapeHtml(question.title)}</h1>
+        <div class="markdown">${renderQuestionText(question)}</div>
+        ${question.interactive ? `<div class="options">${options}</div>` : ""}
+        <div class="question-actions">
+          ${question.interactive ? `<button class="primary-button" data-action="submit" ${!app.selected.size || app.submitted ? "disabled" : ""}>提交答案</button>` : `<button class="primary-button" data-action="reveal">${app.reveal ? "收起解析" : "展开答案与解析"}</button>`}
+          <button class="compact-button ${progress.favorite ? "active" : ""}" data-action="favorite">${progress.favorite ? "★ 已收藏" : "☆ 收藏"}</button>
+          <span class="spacer"></span>
+          <button class="secondary-button" data-action="previous" ${app.cursor === 0 ? "disabled" : ""}>←</button>
+          <button class="secondary-button" data-action="next" ${app.cursor >= app.queue.length - 1 ? "disabled" : ""}>→</button>
+        </div>
+      </section>
+      <aside class="answer-pane">${answerPanel(question)}</aside>
+    </div>
+  </div>`;
+}
+
+function renderCatalog() {
+  const main = document.querySelector("#main");
+  const path = app.catalog;
+  const base = app.data;
+  const breadcrumb = [`<button data-catalog-level="root">全部科目</button>`];
+  if (path.subject) breadcrumb.push(`<span>›</span><button data-catalog-level="subject">${escapeHtml(path.subject)}</button>`);
+  if (path.chapter) breadcrumb.push(`<span>›</span><button data-catalog-level="chapter">${escapeHtml(path.chapter)}</button>`);
+  if (path.knowledge) breadcrumb.push(`<span>›</span><span>${escapeHtml(path.knowledge)}</span>`);
+  let content;
+  if (!path.subject) {
+    content = directoryItems(group(base, "subject"), "subject");
+  } else if (!path.chapter) {
+    content = directoryItems(group(base.filter(q => q.subject === path.subject), "chapter"), "chapter");
+  } else if (!path.knowledge) {
+    content = directoryItems(group(base.filter(q => q.subject === path.subject && q.chapter === path.chapter), "knowledge"), "knowledge");
+  } else {
+    const questions = base.filter(q => q.subject === path.subject && q.chapter === path.chapter && q.knowledge === path.knowledge);
+    content = `<div class="question-list">${questions.map(questionRow).join("")}</div>`;
+  }
+  main.innerHTML = `<section class="catalog"><h1 class="page-title">错题目录</h1><p class="page-subtitle">${app.data.length} 道已归档错题</p><div class="breadcrumbs">${breadcrumb.join("")}</div>${content}</section>`;
+}
+
+function group(items, key) {
+  const grouped = new Map();
+  for (const item of items) grouped.set(item[key], [...(grouped.get(item[key]) || []), item]);
+  return [...grouped.entries()].sort((a, b) => a[0].localeCompare(b[0], "zh-CN"));
+}
+
+function directoryItems(groups, level) {
+  return `<div class="directory-grid">${groups.map(([name, items]) => {
+    const unfinished = items.filter(item => progressFor(item.id).mastery !== "已掌握").length;
+    return `<button class="directory-item" data-catalog-pick="${level}" data-value="${escapeHtml(name)}"><h3>${escapeHtml(name)}</h3><p>${items.length} 道 · ${unfinished} 道未掌握</p></button>`;
+  }).join("")}</div>`;
+}
+
+function questionRow(question) {
+  const progress = progressFor(question.id);
+  return `<button class="question-row" data-open-question="${question.id}"><span><strong>${escapeHtml(question.title)}</strong><br><small>${escapeHtml(question.type)} · ${escapeHtml(progress.mastery)}</small></span><span class="badge ${question.uncertain ? "warn" : ""}">${question.uncertain ? "存疑" : question.interactive ? "可作答" : "查阅"}</span></button>`;
+}
+
+function renderFavorites() {
+  const items = app.data.filter(item => progressFor(item.id).favorite);
+  document.querySelector("#main").innerHTML = `<section class="catalog"><h1 class="page-title">收藏</h1><p class="page-subtitle">${items.length} 道</p>${items.length ? `<div class="question-list">${items.map(questionRow).join("")}</div>` : renderEmpty("还没有收藏题目", false)}</section>`;
+}
+
+function renderProgress() {
+  const states = app.data.map(item => progressFor(item.id));
+  const attempted = states.filter(item => item.attempts).length;
+  const totalAttempts = states.reduce((sum, item) => sum + item.attempts, 0);
+  const correct = states.reduce((sum, item) => sum + item.correct, 0);
+  const retry = states.filter(item => item.retry).length;
+  const mastered = states.filter(item => item.mastery === "已掌握").length;
+  const subjectBars = group(app.data, "subject").map(([subject, items]) => {
+    const done = items.filter(item => progressFor(item.id).mastery === "已掌握").length;
+    const percent = items.length ? Math.round(done / items.length * 100) : 0;
+    return `<div class="bar-row"><span>${subject}</span><div class="bar"><i style="width:${percent}%"></i></div><b>${percent}%</b></div>`;
+  }).join("");
+  document.querySelector("#main").innerHTML = `<div class="progress-grid">
+    ${metric("已作答", attempted)}${metric("正确率", totalAttempts ? `${Math.round(correct / totalAttempts * 100)}%` : "0%")} ${metric("待重做", retry)}${metric("已掌握", mastered)}
+  </div><section class="progress-section"><h2>科目掌握度</h2>${subjectBars}</section>
+  <section class="progress-section"><h2>本地进度</h2><div class="question-actions"><button class="secondary-button" data-action="export">导出进度</button><button class="secondary-button" data-action="import">导入进度</button></div></section>`;
+}
+
+function metric(label, value) {
+  return `<div class="metric"><strong>${value}</strong><span>${label}</span></div>`;
+}
+
+function renderEmpty(message, wrapper = true) {
+  const html = `<div class="empty">${message}</div>`;
+  if (wrapper) document.querySelector("#main").innerHTML = html;
+  return html;
+}
+
+function render() {
+  document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === app.view));
+  if (app.view === "practice") renderPractice();
+  if (app.view === "catalog") renderCatalog();
+  if (app.view === "favorites") renderFavorites();
+  if (app.view === "progress") renderProgress();
+}
+
+function submitAnswer(question) {
+  app.submitted = true;
+  const correct = sameKeys([...app.selected], question.correctKeys);
+  const previous = progressFor(question.id);
+  updateProgress(question.id, { attempts: previous.attempts + 1, correct: previous.correct + (correct ? 1 : 0), retry: !correct, lastAnswer: [...app.selected], lastReviewed: new Date().toISOString() });
+  render();
+}
+
+function navigateQuestion(delta) {
+  app.cursor = Math.min(Math.max(0, app.cursor + delta), app.queue.length - 1);
+  resetQuestionState();
+  render();
+}
+
+function openQuestion(id) {
+  setQueue(filteredQuestions(), id);
+  if (!app.queue.includes(id)) setQueue(app.data, id);
+  app.view = "practice";
+  render();
+}
+
+function renderFilters() {
+  const subjects = [...new Set(app.data.map(item => item.subject))];
+  const chapters = [...new Set(app.data.filter(item => !app.filters.subject || item.subject === app.filters.subject).map(item => item.chapter))];
+  document.querySelector("#filter-content").innerHTML = `${selectGroup("科目", "subject", ["", ...subjects])}${selectGroup("章节", "chapter", ["", ...chapters])}${selectGroup("题型", "type", ["", "客观", "综合"])}${selectGroup("状态", "status", ["", "未掌握", "复习中", "已掌握", "待重做", "收藏"])}<div class="filter-actions"><button class="secondary-button" data-action="clear-filters">清除</button><button class="primary-button" data-action="apply-filters">应用</button></div>`;
+}
+
+function selectGroup(label, key, values) {
+  return `<div class="filter-group"><label for="filter-${key}">${label}</label><select class="select-input" id="filter-${key}" data-filter="${key}">${values.map(value => `<option value="${escapeHtml(value)}" ${app.filters[key] === value ? "selected" : ""}>${escapeHtml(value || "全部")}</option>`).join("")}</select></div>`;
+}
+
+function search(query) {
+  const normalized = query.trim().toLowerCase();
+  const results = normalized ? app.data.filter(item => [item.question, item.knowledge, item.reason, item.analysis].some(value => (value || "").toLowerCase().includes(normalized))).slice(0, 60) : [];
+  document.querySelector("#search-results").innerHTML = results.map(item => `<button class="search-result" data-open-question="${item.id}"><strong>${escapeHtml(item.title)}</strong><br><small>${escapeHtml(item.subject)} · ${escapeHtml(item.knowledge)}</small></button>`).join("");
+}
+
+function exportProgress() {
+  const blob = new Blob([JSON.stringify(app.state, null, 2)], { type: "application/json" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `CPA错题复习进度-${new Date().toISOString().slice(0, 10)}.json`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+document.addEventListener("click", event => {
+  const button = event.target.closest("button");
+  if (!button) return;
+  if (button.dataset.view) { app.view = button.dataset.view; render(); return; }
+  if (button.dataset.option) {
+    const question = currentQuestion();
+    if (question.correctKeys.length === 1) app.selected = new Set([button.dataset.option]);
+    else app.selected.has(button.dataset.option) ? app.selected.delete(button.dataset.option) : app.selected.add(button.dataset.option);
+    render(); return;
+  }
+  if (button.dataset.mastery) { updateProgress(currentQuestion().id, { mastery: button.dataset.mastery }); render(); return; }
+  if (button.dataset.openQuestion) { document.querySelector("#search-dialog").close(); openQuestion(button.dataset.openQuestion); return; }
+  if (button.dataset.catalogPick) { app.catalog[button.dataset.catalogPick] = button.dataset.value; render(); return; }
+  if (button.dataset.catalogLevel === "root") app.catalog = { subject: null, chapter: null, knowledge: null };
+  if (button.dataset.catalogLevel === "subject") app.catalog = { ...app.catalog, chapter: null, knowledge: null };
+  if (button.dataset.catalogLevel === "chapter") app.catalog.knowledge = null;
+  if (button.dataset.catalogLevel) { render(); return; }
+  const action = button.dataset.action;
+  if (action === "submit") submitAnswer(currentQuestion());
+  if (action === "reveal") { app.reveal = !app.reveal; render(); }
+  if (action === "favorite") { const q = currentQuestion(); updateProgress(q.id, { favorite: !progressFor(q.id).favorite }); render(); }
+  if (action === "previous") navigateQuestion(-1);
+  if (action === "next") navigateQuestion(1);
+  if (action === "home") { app.view = "practice"; render(); }
+  if (action === "search") { document.querySelector("#search-dialog").showModal(); document.querySelector("#search-input").focus(); }
+  if (action === "filters") { renderFilters(); document.querySelector("#filter-dialog").showModal(); }
+  if (action === "clear-filters") { app.filters = { subject: "", chapter: "", type: "", status: "" }; renderFilters(); }
+  if (action === "apply-filters") { setQueue(filteredQuestions()); document.querySelector("#filter-dialog").close(); app.view = "practice"; render(); }
+  if (action === "export") exportProgress();
+  if (action === "import") document.querySelector("#import-file").click();
+});
+
+document.addEventListener("change", event => {
+  if (event.target.dataset.filter) { app.filters[event.target.dataset.filter] = event.target.value; if (event.target.dataset.filter === "subject") app.filters.chapter = ""; renderFilters(); }
+  if (event.target.id === "import-file" && event.target.files[0]) {
+    const reader = new FileReader();
+    reader.onload = () => { try { app.state = JSON.parse(reader.result); saveState(); render(); } catch { alert("进度文件无法读取"); } };
+    reader.readAsText(event.target.files[0]);
+  }
+});
+
+document.querySelector("#search-input").addEventListener("input", event => search(event.target.value));
+
+fetch("data/questions.json")
+  .then(response => { if (!response.ok) throw new Error("题库载入失败"); return response.json(); })
+  .then(payload => {
+    app.data = payload.questions;
+    app.byId = new Map(app.data.map(item => [item.id, item]));
+    setQueue(app.data);
+    render();
+  })
+  .catch(error => renderEmpty(error.message));
