@@ -217,7 +217,6 @@ function renderPractice() {
     <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
     <div class="split-question">
       <section class="question-pane">
-        <h1 class="question-title">${escapeHtml(question.title)}</h1>
         <div class="question-type ${question.answerMode}">${escapeHtml(typeLabel)}</div>
         <div class="markdown">${renderQuestionText(question)}</div>
         ${question.interactive ? `<div class="options ${question.answerMode}">${options}</div>` : ""}
