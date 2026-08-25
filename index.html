@@ -10,8 +10,11 @@
 <body>
   <div id="app" class="app-shell">
     <header class="topbar">
-      <button class="brand" data-action="home">CPA 错题复习</button>
+      <button class="brand" data-action="home">错题复习</button>
       <div class="top-actions">
+        <label class="exam-switcher" aria-label="选择考试">
+          <select id="exam-select"></select>
+        </label>
         <button class="icon-button" data-action="search" aria-label="搜索" title="搜索">⌕</button>
         <button class="icon-button" data-action="filters" aria-label="筛选" title="筛选">≡</button>
       </div>
@@ -45,6 +48,7 @@
   </dialog>
 
   <input id="import-file" type="file" accept="application/json" hidden>
+  <script src="scheduler.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

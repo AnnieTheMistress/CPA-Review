@@ -1,0 +1,8 @@
+[
+  {
+    "id": "cpa",
+    "name": "CPA",
+    "questions": "data/cpa/questions.json",
+    "aliases": "data/cpa/question-aliases.json"
+  }
+]

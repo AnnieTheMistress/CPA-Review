@@ -25,6 +25,8 @@ button { color: inherit; }
 .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; background: var(--paper); border-bottom: 1px solid var(--line); }
 .brand { border: 0; background: transparent; padding: 8px 0; font-weight: 750; font-size: 17px; }
 .top-actions { display: flex; gap: 6px; }
+.exam-switcher { display: flex; align-items: center; }
+.exam-switcher select { min-height: 36px; max-width: 120px; border: 1px solid var(--line); border-radius: 5px; padding: 0 28px 0 10px; background: var(--paper); color: var(--ink); font-weight: 700; }
 .icon-button { width: 40px; height: 40px; border: 0; background: transparent; font-size: 24px; display: grid; place-items: center; border-radius: 6px; }
 .icon-button:active { background: var(--green-soft); }
 .main { min-width: 0; padding: 18px; overflow: auto; }

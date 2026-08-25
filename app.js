@@ -1,7 +1,10 @@
-const STORAGE_KEY = "cpa-review-state-v1";
+const STORAGE_KEY = "exam-review-state-v2";
+const LEGACY_STORAGE_KEY = "cpa-review-state-v1";
 
 const app = {
   data: [],
+  exams: [],
+  examId: "cpa",
   byId: new Map(),
   view: "practice",
   queue: [],
@@ -9,6 +12,7 @@ const app = {
   selected: new Set(),
   submitted: false,
   reveal: false,
+  knowledgeState: new Map(),
   catalog: { subject: null, chapter: null, knowledge: null },
   filters: { subject: "", chapter: "", type: "", status: "" },
   state: loadState(),
@@ -16,23 +20,38 @@ const app = {
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-    return { questions: saved.questions || {}, session: saved.session || null };
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved?.version === 2 && saved.exams) return saved;
+    const legacy = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY)) || {};
+    const migrated = {
+      version: 2,
+      currentExam: "cpa",
+      exams: { cpa: { questions: legacy.questions || {}, session: legacy.session || null } },
+      migratedLegacy: true,
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+    return migrated;
   } catch {
-    return { questions: {}, session: null };
+    return { version: 2, currentExam: "cpa", exams: { cpa: { questions: {}, session: null } }, migratedLegacy: true };
   }
 }
 
 function saveState() {
+  app.state.currentExam = app.examId;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(app.state));
 }
 
+function examState() {
+  app.state.exams[app.examId] ||= { questions: {}, session: null };
+  return app.state.exams[app.examId];
+}
+
 function progressFor(id) {
-  return app.state.questions[id] || { attempts: 0, correct: 0, mastery: "未掌握", favorite: false, retry: false };
+  return examState().questions[id] || { attempts: 0, correct: 0, mastery: "未掌握", favorite: false, retry: false };
 }
 
 function updateProgress(id, patch) {
-  app.state.questions[id] = { ...progressFor(id), ...patch };
+  examState().questions[id] = { ...progressFor(id), ...patch };
   saveState();
 }
 
@@ -60,30 +79,36 @@ function mergeProgress(left = {}, right = {}) {
     mastery: masteryRank[left.mastery] > masteryRank[right.mastery] ? left.mastery : (right.mastery || left.mastery || "未掌握"),
     lastAnswer: latest.lastAnswer,
     lastReviewed: latest.lastReviewed,
+    dailyResults: { ...(left.dailyResults || {}), ...(right.dailyResults || {}) },
+    stage: Number.isInteger(latest.stage) ? latest.stage : (left.stage ?? right.stage),
+    dueDate: latest.dueDate || left.dueDate || right.dueDate,
+    mastered: Boolean(left.mastered || right.mastered),
   };
 }
 
 function migrateAliases(aliases) {
+  const state = examState();
   for (const [oldId, targetId] of Object.entries(aliases)) {
     const resolved = resolveAlias(targetId, aliases);
-    if (app.state.questions[oldId]) {
-      app.state.questions[resolved] = mergeProgress(app.state.questions[resolved], app.state.questions[oldId]);
-      delete app.state.questions[oldId];
+    if (state.questions[oldId]) {
+      state.questions[resolved] = mergeProgress(state.questions[resolved], state.questions[oldId]);
+      delete state.questions[oldId];
     }
   }
-  if (app.state.session) {
-    app.state.session.currentId = resolveAlias(app.state.session.currentId, aliases);
-    app.state.session.queue = (app.state.session.queue || []).map(id => resolveAlias(id, aliases));
+  if (state.session) {
+    state.session.currentId = resolveAlias(state.session.currentId, aliases);
+    state.session.queue = (state.session.queue || []).map(id => resolveAlias(id, aliases));
   }
   saveState();
 }
 
 function saveSession() {
   if (!app.data.length) return;
-  app.state.session = {
+  examState().session = {
     filters: { ...app.filters },
     queue: [...app.queue],
     currentId: app.queue[app.cursor] || null,
+    day: ReviewScheduler.beijingDate(),
   };
   saveState();
 }
@@ -139,8 +164,9 @@ function filteredQuestions(extra = {}) {
 
 function resetQuestionState(id = app.queue[app.cursor]) {
   const progress = id ? progressFor(id) : {};
-  app.selected = new Set(progress.lastAnswer || []);
-  app.submitted = Boolean(progress.lastReviewed && progress.lastAnswer);
+  const reviewedToday = progress.lastReviewed && ReviewScheduler.beijingDate(progress.lastReviewed) === ReviewScheduler.beijingDate();
+  app.selected = new Set(reviewedToday ? (progress.lastAnswer || []) : []);
+  app.submitted = Boolean(reviewedToday && progress.lastAnswer);
   app.reveal = false;
 }
 
@@ -152,16 +178,33 @@ function setQueue(questions, startId = null) {
 }
 
 function restoreSession() {
-  const session = app.state.session;
+  const session = examState().session;
   if (!session) {
-    setQueue(app.data);
+    setQueue(dailyQuestions());
     return;
   }
   app.filters = { ...app.filters, ...(session.filters || {}) };
-  const saved = (session.queue || []).map(id => app.byId.get(id)).filter(Boolean);
-  const queue = saved.length ? saved : filteredQuestions();
-  setQueue(queue.length ? queue : app.data, session.currentId);
+  const sameDay = session.day === ReviewScheduler.beijingDate();
+  const saved = sameDay ? (session.queue || []).map(id => app.byId.get(id)).filter(Boolean) : [];
+  const queue = saved.length ? saved : dailyQuestions();
+  setQueue(queue.length ? queue : app.data, sameDay ? session.currentId : null);
   if (app.cursor < 0) app.cursor = 0;
+}
+
+function dailyQuestions() {
+  const filtered = filteredQuestions();
+  return ReviewScheduler.buildDailyQueue(filtered, examState().questions);
+}
+
+function recomputeKnowledgeState() {
+  const groups = new Map();
+  for (const question of app.data) {
+    const key = `${question.subject}|${question.chapter}|${question.knowledge}`;
+    groups.set(key, [...(groups.get(key) || []), question]);
+  }
+  app.knowledgeState = new Map(
+    [...groups].map(([key, questions]) => [key, ReviewScheduler.knowledgeMastered(questions, examState().questions)])
+  );
 }
 
 function currentQuestion() {
@@ -190,8 +233,7 @@ function answerPanel(question) {
     ${section("我的答案", question.myAnswer)}
     ${section("我的错因", question.reason)}
     ${section("核对意见", question.check)}
-    ${section("解析", question.analysis)}
-    <div class="answer-section"><h3>掌握状态</h3><div class="mastery-row">${["未掌握", "复习中", "已掌握"].map(value => `<button class="compact-button ${progressFor(question.id).mastery === value ? "active" : ""}" data-mastery="${value}">${value}</button>`).join("")}</div></div>`;
+    ${section("解析", question.analysis)}`;
 }
 
 function section(title, content) {
@@ -263,14 +305,12 @@ function group(items, key) {
 
 function directoryItems(groups, level) {
   return `<div class="directory-grid">${groups.map(([name, items]) => {
-    const unfinished = items.filter(item => progressFor(item.id).mastery !== "已掌握").length;
-    return `<button class="directory-item" data-catalog-pick="${level}" data-value="${escapeHtml(name)}"><h3>${escapeHtml(name)}</h3><p>${items.length} 道 · ${unfinished} 道未掌握</p></button>`;
+    return `<button class="directory-item" data-catalog-pick="${level}" data-value="${escapeHtml(name)}"><h3>${escapeHtml(name)}</h3><p>${items.length} 道</p></button>`;
   }).join("")}</div>`;
 }
 
 function questionRow(question) {
-  const progress = progressFor(question.id);
-  return `<button class="question-row" data-open-question="${question.id}"><span><strong>${escapeHtml(question.title)}</strong><br><small>${escapeHtml(question.type)} · ${escapeHtml(progress.mastery)}</small></span><span class="badge ${question.uncertain ? "warn" : ""}">${question.uncertain ? "存疑" : question.interactive ? "可作答" : "查阅"}</span></button>`;
+  return `<button class="question-row" data-open-question="${question.id}"><span><strong>${escapeHtml(question.title)}</strong><br><small>${escapeHtml(question.type)}</small></span><span class="badge ${question.uncertain ? "warn" : ""}">${question.uncertain ? "存疑" : question.interactive ? "可作答" : "查阅"}</span></button>`;
 }
 
 function renderFavorites() {
@@ -284,15 +324,15 @@ function renderProgress() {
   const totalAttempts = states.reduce((sum, item) => sum + item.attempts, 0);
   const correct = states.reduce((sum, item) => sum + item.correct, 0);
   const retry = states.filter(item => item.retry).length;
-  const mastered = states.filter(item => item.mastery === "已掌握").length;
+  const favorites = states.filter(item => item.favorite).length;
   const subjectBars = group(app.data, "subject").map(([subject, items]) => {
-    const done = items.filter(item => progressFor(item.id).mastery === "已掌握").length;
+    const done = items.filter(item => (progressFor(item.id).attempts || 0) > 0).length;
     const percent = items.length ? Math.round(done / items.length * 100) : 0;
     return `<div class="bar-row"><span>${subject}</span><div class="bar"><i style="width:${percent}%"></i></div><b>${percent}%</b></div>`;
   }).join("");
   document.querySelector("#main").innerHTML = `<div class="progress-grid">
-    ${metric("已作答", attempted)}${metric("正确率", totalAttempts ? `${Math.round(correct / totalAttempts * 100)}%` : "0%")} ${metric("待重做", retry)}${metric("已掌握", mastered)}
-  </div><section class="progress-section"><h2>科目掌握度</h2>${subjectBars}</section>
+    ${metric("已作答", attempted)}${metric("正确率", totalAttempts ? `${Math.round(correct / totalAttempts * 100)}%` : "0%")} ${metric("待重做", retry)}${metric("已收藏", favorites)}
+  </div><section class="progress-section"><h2>科目作答进度</h2>${subjectBars}</section>
   <section class="progress-section"><h2>本地进度</h2><div class="question-actions"><button class="secondary-button" data-action="export">导出进度</button><button class="secondary-button" data-action="import">导入进度</button></div></section>`;
 }
 
@@ -318,7 +358,10 @@ function submitAnswer(question) {
   app.submitted = true;
   const correct = sameKeys([...app.selected], question.correctKeys);
   const previous = progressFor(question.id);
-  updateProgress(question.id, { attempts: previous.attempts + 1, correct: previous.correct + (correct ? 1 : 0), retry: !correct, lastAnswer: [...app.selected], lastReviewed: new Date().toISOString() });
+  const reviewed = ReviewScheduler.updateReview(previous, correct);
+  delete reviewed.effective;
+  updateProgress(question.id, { ...reviewed, attempts: previous.attempts + 1, correct: previous.correct + (correct ? 1 : 0), retry: !correct, lastAnswer: [...app.selected], lastReviewed: new Date().toISOString() });
+  recomputeKnowledgeState();
   render();
 }
 
@@ -340,7 +383,7 @@ function openQuestion(id) {
 function renderFilters() {
   const subjects = [...new Set(app.data.map(item => item.subject))];
   const chapters = [...new Set(app.data.filter(item => !app.filters.subject || item.subject === app.filters.subject).map(item => item.chapter))];
-  document.querySelector("#filter-content").innerHTML = `${selectGroup("科目", "subject", ["", ...subjects])}${selectGroup("章节", "chapter", ["", ...chapters])}${selectGroup("题型", "type", ["", "客观", "综合"])}${selectGroup("状态", "status", ["", "未掌握", "复习中", "已掌握", "待重做", "收藏"])}<div class="filter-actions"><button class="secondary-button" data-action="clear-filters">清除</button><button class="primary-button" data-action="apply-filters">应用</button></div>`;
+  document.querySelector("#filter-content").innerHTML = `${selectGroup("科目", "subject", ["", ...subjects])}${selectGroup("章节", "chapter", ["", ...chapters])}${selectGroup("题型", "type", ["", "客观", "综合"])}${selectGroup("状态", "status", ["", "待重做", "收藏"])}<div class="filter-actions"><button class="secondary-button" data-action="clear-filters">清除</button><button class="primary-button" data-action="apply-filters">应用</button></div>`;
 }
 
 function selectGroup(label, key, values) {
@@ -357,7 +400,7 @@ function exportProgress() {
   const blob = new Blob([JSON.stringify(app.state, null, 2)], { type: "application/json" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `CPA错题复习进度-${new Date().toISOString().slice(0, 10)}.json`;
+  link.download = `错题复习进度-${new Date().toISOString().slice(0, 10)}.json`;
   link.click();
   URL.revokeObjectURL(link.href);
 }
@@ -396,25 +439,70 @@ document.addEventListener("click", event => {
 });
 
 document.addEventListener("change", event => {
+  if (event.target.id === "exam-select") switchExam(event.target.value);
   if (event.target.dataset.filter) { app.filters[event.target.dataset.filter] = event.target.value; if (event.target.dataset.filter === "subject") app.filters.chapter = ""; renderFilters(); }
   if (event.target.id === "import-file" && event.target.files[0]) {
     const reader = new FileReader();
-    reader.onload = () => { try { app.state = JSON.parse(reader.result); app.state.questions ||= {}; restoreSession(); saveState(); render(); } catch { alert("进度文件无法读取"); } };
+    reader.onload = async () => {
+      try {
+        const imported = JSON.parse(reader.result);
+        app.state = imported.version === 2 && imported.exams
+          ? imported
+          : { version: 2, currentExam: "cpa", exams: { cpa: { questions: imported.questions || {}, session: imported.session || null } }, migratedLegacy: true };
+        saveState();
+        await loadExam(app.state.currentExam || "cpa");
+      } catch {
+        alert("进度文件无法读取");
+      }
+    };
     reader.readAsText(event.target.files[0]);
   }
 });
 
 document.querySelector("#search-input").addEventListener("input", event => search(event.target.value));
 
-Promise.all([
-  fetch("data/questions.json").then(response => { if (!response.ok) throw new Error("题库载入失败"); return response.json(); }),
-  fetch("data/question-aliases.json").then(response => response.ok ? response.json() : {}).catch(() => ({})),
-])
-  .then(([payload, aliases]) => {
-    app.data = payload.questions;
-    app.byId = new Map(app.data.map(item => [item.id, item]));
-    migrateAliases(aliases);
-    restoreSession();
-    render();
+function renderExamSelector() {
+  const select = document.querySelector("#exam-select");
+  select.innerHTML = app.exams.map(exam => `<option value="${escapeHtml(exam.id)}" ${exam.id === app.examId ? "selected" : ""}>${escapeHtml(exam.name)}</option>`).join("");
+}
+
+async function loadExam(examId) {
+  const exam = app.exams.find(item => item.id === examId) || app.exams[0];
+  if (!exam) throw new Error("没有可用的考试题库");
+  app.examId = exam.id;
+  app.filters = { subject: "", chapter: "", type: "", status: "" };
+  app.catalog = { subject: null, chapter: null, knowledge: null };
+  const [payload, aliases] = await Promise.all([
+    fetch(exam.questions).then(response => { if (!response.ok) throw new Error(`${exam.name} 题库载入失败`); return response.json(); }),
+    fetch(exam.aliases).then(response => response.ok ? response.json() : {}).catch(() => ({})),
+  ]);
+  app.data = payload.questions;
+  app.byId = new Map(app.data.map(item => [item.id, item]));
+  migrateAliases(aliases);
+  restoreSession();
+  recomputeKnowledgeState();
+  renderExamSelector();
+  document.title = `${exam.name} 错题复习`;
+  saveState();
+  render();
+}
+
+async function switchExam(examId) {
+  if (examId === app.examId) return;
+  saveSession();
+  document.querySelector("#main").innerHTML = `<div class="loading">正在载入题库…</div>`;
+  try {
+    await loadExam(examId);
+  } catch (error) {
+    renderEmpty(error.message);
+  }
+}
+
+fetch("data/exams.json")
+  .then(response => { if (!response.ok) throw new Error("考试清单载入失败"); return response.json(); })
+  .then(async exams => {
+    app.exams = exams;
+    const initial = exams.some(exam => exam.id === app.state.currentExam) ? app.state.currentExam : exams[0]?.id;
+    await loadExam(initial);
   })
   .catch(error => renderEmpty(error.message));
