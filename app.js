@@ -16,9 +16,10 @@ const app = {
 
 function loadState() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { questions: {} };
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    return { questions: saved.questions || {}, session: saved.session || null };
   } catch {
-    return { questions: {} };
+    return { questions: {}, session: null };
   }
 }
 
@@ -32,6 +33,58 @@ function progressFor(id) {
 
 function updateProgress(id, patch) {
   app.state.questions[id] = { ...progressFor(id), ...patch };
+  saveState();
+}
+
+function resolveAlias(id, aliases) {
+  let resolved = id;
+  const visited = new Set();
+  while (aliases[resolved] && !visited.has(resolved)) {
+    visited.add(resolved);
+    resolved = aliases[resolved];
+  }
+  return resolved;
+}
+
+function mergeProgress(left = {}, right = {}) {
+  const masteryRank = { "未掌握": 0, "复习中": 1, "已掌握": 2 };
+  const ordered = [left, right].sort((a, b) => String(a.lastReviewed || "").localeCompare(String(b.lastReviewed || "")));
+  const latest = ordered[ordered.length - 1];
+  return {
+    ...left,
+    ...right,
+    attempts: (left.attempts || 0) + (right.attempts || 0),
+    correct: (left.correct || 0) + (right.correct || 0),
+    favorite: Boolean(left.favorite || right.favorite),
+    retry: Boolean(left.retry || right.retry),
+    mastery: masteryRank[left.mastery] > masteryRank[right.mastery] ? left.mastery : (right.mastery || left.mastery || "未掌握"),
+    lastAnswer: latest.lastAnswer,
+    lastReviewed: latest.lastReviewed,
+  };
+}
+
+function migrateAliases(aliases) {
+  for (const [oldId, targetId] of Object.entries(aliases)) {
+    const resolved = resolveAlias(targetId, aliases);
+    if (app.state.questions[oldId]) {
+      app.state.questions[resolved] = mergeProgress(app.state.questions[resolved], app.state.questions[oldId]);
+      delete app.state.questions[oldId];
+    }
+  }
+  if (app.state.session) {
+    app.state.session.currentId = resolveAlias(app.state.session.currentId, aliases);
+    app.state.session.queue = (app.state.session.queue || []).map(id => resolveAlias(id, aliases));
+  }
+  saveState();
+}
+
+function saveSession() {
+  if (!app.data.length) return;
+  app.state.session = {
+    filters: { ...app.filters },
+    queue: [...app.queue],
+    currentId: app.queue[app.cursor] || null,
+  };
   saveState();
 }
 
@@ -84,9 +137,10 @@ function filteredQuestions(extra = {}) {
   });
 }
 
-function resetQuestionState() {
-  app.selected = new Set();
-  app.submitted = false;
+function resetQuestionState(id = app.queue[app.cursor]) {
+  const progress = id ? progressFor(id) : {};
+  app.selected = new Set(progress.lastAnswer || []);
+  app.submitted = Boolean(progress.lastReviewed && progress.lastAnswer);
   app.reveal = false;
 }
 
@@ -94,6 +148,20 @@ function setQueue(questions, startId = null) {
   app.queue = questions.map(item => item.id);
   app.cursor = Math.max(0, startId ? app.queue.indexOf(startId) : 0);
   resetQuestionState();
+  saveSession();
+}
+
+function restoreSession() {
+  const session = app.state.session;
+  if (!session) {
+    setQueue(app.data);
+    return;
+  }
+  app.filters = { ...app.filters, ...(session.filters || {}) };
+  const saved = (session.queue || []).map(id => app.byId.get(id)).filter(Boolean);
+  const queue = saved.length ? saved : filteredQuestions();
+  setQueue(queue.length ? queue : app.data, session.currentId);
+  if (app.cursor < 0) app.cursor = 0;
 }
 
 function currentQuestion() {
@@ -141,17 +209,20 @@ function renderPractice() {
   const options = question.options.map(option => {
     const selected = app.selected.has(option.key);
     const graded = app.submitted ? question.correctKeys.includes(option.key) ? "correct" : selected ? "wrong" : "" : "";
-    return `<button class="option ${selected ? "selected" : ""} ${graded}" data-option="${option.key}" ${app.submitted ? "disabled" : ""}><span class="option-key">${option.key}</span><span>${inlineMarkdown(option.text)}</span></button>`;
+    const control = selected ? (question.answerMode === "multiple" ? "✓" : "•") : "";
+    return `<button class="option ${question.answerMode} ${selected ? "selected" : ""} ${graded}" data-option="${option.key}" ${app.submitted ? "disabled" : ""}><span class="choice-control" aria-hidden="true">${control}</span><span class="option-key">${option.key}</span><span>${inlineMarkdown(option.text)}</span></button>`;
   }).join("");
+  const typeLabel = question.answerMode === "multiple" ? "多选题 · 可选择多个答案" : question.answerMode === "single" ? "单选题" : question.type;
   document.querySelector("#main").innerHTML = `<div class="practice">
     <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
     <div class="split-question">
       <section class="question-pane">
         <h1 class="question-title">${escapeHtml(question.title)}</h1>
+        <div class="question-type ${question.answerMode}">${escapeHtml(typeLabel)}</div>
         <div class="markdown">${renderQuestionText(question)}</div>
-        ${question.interactive ? `<div class="options">${options}</div>` : ""}
+        ${question.interactive ? `<div class="options ${question.answerMode}">${options}</div>` : ""}
         <div class="question-actions">
-          ${question.interactive ? `<button class="primary-button" data-action="submit" ${!app.selected.size || app.submitted ? "disabled" : ""}>提交答案</button>` : `<button class="primary-button" data-action="reveal">${app.reveal ? "收起解析" : "展开答案与解析"}</button>`}
+          ${question.interactive ? app.submitted ? `<button class="secondary-button" data-action="retry-question">重新作答</button>` : `<button class="primary-button" data-action="submit" ${!app.selected.size ? "disabled" : ""}>提交答案</button>` : `<button class="primary-button" data-action="reveal">${app.reveal ? "收起解析" : "展开答案与解析"}</button>`}
           <button class="compact-button ${progress.favorite ? "active" : ""}" data-action="favorite">${progress.favorite ? "★ 已收藏" : "☆ 收藏"}</button>
           <span class="spacer"></span>
           <button class="secondary-button" data-action="previous" ${app.cursor === 0 ? "disabled" : ""}>←</button>
@@ -255,6 +326,7 @@ function submitAnswer(question) {
 function navigateQuestion(delta) {
   app.cursor = Math.min(Math.max(0, app.cursor + delta), app.queue.length - 1);
   resetQuestionState();
+  saveSession();
   render();
 }
 
@@ -262,6 +334,7 @@ function openQuestion(id) {
   setQueue(filteredQuestions(), id);
   if (!app.queue.includes(id)) setQueue(app.data, id);
   app.view = "practice";
+  saveSession();
   render();
 }
 
@@ -296,7 +369,7 @@ document.addEventListener("click", event => {
   if (button.dataset.view) { app.view = button.dataset.view; render(); return; }
   if (button.dataset.option) {
     const question = currentQuestion();
-    if (question.correctKeys.length === 1) app.selected = new Set([button.dataset.option]);
+    if (question.answerMode === "single") app.selected = new Set([button.dataset.option]);
     else app.selected.has(button.dataset.option) ? app.selected.delete(button.dataset.option) : app.selected.add(button.dataset.option);
     render(); return;
   }
@@ -309,6 +382,7 @@ document.addEventListener("click", event => {
   if (button.dataset.catalogLevel) { render(); return; }
   const action = button.dataset.action;
   if (action === "submit") submitAnswer(currentQuestion());
+  if (action === "retry-question") { app.selected = new Set(); app.submitted = false; app.reveal = false; render(); }
   if (action === "reveal") { app.reveal = !app.reveal; render(); }
   if (action === "favorite") { const q = currentQuestion(); updateProgress(q.id, { favorite: !progressFor(q.id).favorite }); render(); }
   if (action === "previous") navigateQuestion(-1);
@@ -317,7 +391,7 @@ document.addEventListener("click", event => {
   if (action === "search") { document.querySelector("#search-dialog").showModal(); document.querySelector("#search-input").focus(); }
   if (action === "filters") { renderFilters(); document.querySelector("#filter-dialog").showModal(); }
   if (action === "clear-filters") { app.filters = { subject: "", chapter: "", type: "", status: "" }; renderFilters(); }
-  if (action === "apply-filters") { setQueue(filteredQuestions()); document.querySelector("#filter-dialog").close(); app.view = "practice"; render(); }
+  if (action === "apply-filters") { setQueue(filteredQuestions()); document.querySelector("#filter-dialog").close(); app.view = "practice"; saveSession(); render(); }
   if (action === "export") exportProgress();
   if (action === "import") document.querySelector("#import-file").click();
 });
@@ -326,19 +400,22 @@ document.addEventListener("change", event => {
   if (event.target.dataset.filter) { app.filters[event.target.dataset.filter] = event.target.value; if (event.target.dataset.filter === "subject") app.filters.chapter = ""; renderFilters(); }
   if (event.target.id === "import-file" && event.target.files[0]) {
     const reader = new FileReader();
-    reader.onload = () => { try { app.state = JSON.parse(reader.result); saveState(); render(); } catch { alert("进度文件无法读取"); } };
+    reader.onload = () => { try { app.state = JSON.parse(reader.result); app.state.questions ||= {}; restoreSession(); saveState(); render(); } catch { alert("进度文件无法读取"); } };
     reader.readAsText(event.target.files[0]);
   }
 });
 
 document.querySelector("#search-input").addEventListener("input", event => search(event.target.value));
 
-fetch("data/questions.json")
-  .then(response => { if (!response.ok) throw new Error("题库载入失败"); return response.json(); })
-  .then(payload => {
+Promise.all([
+  fetch("data/questions.json").then(response => { if (!response.ok) throw new Error("题库载入失败"); return response.json(); }),
+  fetch("data/question-aliases.json").then(response => response.ok ? response.json() : {}).catch(() => ({})),
+])
+  .then(([payload, aliases]) => {
     app.data = payload.questions;
     app.byId = new Map(app.data.map(item => [item.id, item]));
-    setQueue(app.data);
+    migrateAliases(aliases);
+    restoreSession();
     render();
   })
   .catch(error => renderEmpty(error.message));

@@ -44,6 +44,9 @@ button { color: inherit; }
 .question-pane { border-right: 1px solid var(--line); }
 .answer-pane { background: #fafbf9; }
 .question-title { margin: 0 0 18px; font-size: 18px; line-height: 1.65; font-weight: 650; }
+.question-type { display: inline-flex; align-items: center; min-height: 26px; margin: 0 0 12px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.question-type.single { border-color: #9db8aa; color: var(--green); background: var(--green-soft); }
+.question-type.multiple { border-color: #b9a66d; color: #6f571c; background: var(--gold-soft); }
 .markdown { line-height: 1.72; overflow-wrap: anywhere; }
 .markdown p { margin: 0 0 12px; }
 .markdown strong { font-weight: 750; }
@@ -52,11 +55,14 @@ button { color: inherit; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
 .options { display: grid; gap: 10px; margin-top: 18px; }
-.option { min-height: 48px; border: 1px solid #cfd7d1; background: var(--paper); border-radius: 5px; padding: 11px 14px; text-align: left; display: grid; grid-template-columns: 30px 1fr; gap: 8px; line-height: 1.55; }
+.option { min-height: 48px; border: 1px solid #cfd7d1; background: var(--paper); border-radius: 5px; padding: 11px 14px; text-align: left; display: grid; grid-template-columns: 22px 30px 1fr; gap: 8px; line-height: 1.55; }
 .option.selected { border: 2px solid var(--green); padding: 10px 13px; background: var(--green-soft); }
 .option.correct { border-color: var(--green); background: var(--green-soft); }
 .option.wrong { border-color: var(--red); background: var(--red-soft); }
 .option-key { font-weight: 750; }
+.choice-control { width: 19px; height: 19px; margin-top: 2px; border: 2px solid #82958a; border-radius: 50%; color: var(--green); font-size: 18px; font-weight: 800; line-height: 13px; text-align: center; }
+.option.multiple .choice-control { border-radius: 3px; color: var(--gold); font-size: 14px; line-height: 15px; }
+.option.selected .choice-control { border-color: currentColor; }
 .question-actions { margin-top: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .primary-button, .secondary-button, .compact-button { min-height: 42px; border-radius: 5px; padding: 0 16px; font-weight: 650; }
 .primary-button { border: 1px solid var(--green); background: var(--green); color: white; }
