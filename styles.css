@@ -50,6 +50,7 @@ button { color: inherit; }
 .question-type { display: inline-flex; align-items: center; min-height: 26px; padding: 3px 8px; border: 1px solid var(--line); border-radius: 4px; color: var(--muted); font-size: 12px; font-weight: 700; }
 .question-type.single { border-color: #9db8aa; color: var(--green); background: var(--green-soft); }
 .question-type.multiple { border-color: #b9a66d; color: #6f571c; background: var(--gold-soft); }
+.question-type.uncertain { border-color: #b9a66d; color: #6f571c; background: var(--gold-soft); }
 .markdown { line-height: 1.72; overflow-wrap: anywhere; }
 .markdown p { margin: 0 0 12px; }
 .markdown strong { font-weight: 750; }
