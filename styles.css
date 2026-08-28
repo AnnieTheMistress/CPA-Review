@@ -91,7 +91,14 @@ button { color: inherit; }
 .directory-item h3 { margin: 0 0 8px; font-size: 16px; }
 .directory-item p { margin: 0; color: var(--muted); font-size: 13px; }
 .question-list { display: grid; gap: 8px; }
+.catalog-question-groups { display: grid; gap: 24px; }
+.catalog-question-group { min-width: 0; }
+.catalog-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 9px; }
+.catalog-group-head h2 { margin: 0; font-size: 18px; }
+.catalog-group-head span { color: var(--muted); font-size: 13px; }
 .question-row { border: 1px solid var(--line); background: var(--paper); border-radius: 5px; padding: 14px; text-align: left; display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+.question-row-main { min-width: 0; display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 8px; align-items: start; }
+.question-number { color: var(--green); font-weight: 750; font-variant-numeric: tabular-nums; }
 .question-row strong { line-height: 1.45; }
 .question-row small { color: var(--muted); }
 .badge { display: inline-block; padding: 3px 7px; border-radius: 3px; background: var(--green-soft); color: var(--green); font-size: 11px; white-space: nowrap; }

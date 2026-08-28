@@ -162,6 +162,12 @@ function filteredQuestions(extra = {}) {
   });
 }
 
+function catalogQuestionType(question) {
+  if (question.answerMode === "single") return "单选题";
+  if (question.answerMode === "multiple") return "多选题";
+  return "主观题";
+}
+
 function resetQuestionState(id = app.queue[app.cursor]) {
   const progress = id ? progressFor(id) : {};
   const reviewedToday = progress.lastReviewed && ReviewScheduler.beijingDate(progress.lastReviewed) === ReviewScheduler.beijingDate();
@@ -288,13 +294,20 @@ function renderCatalog() {
     content = directoryItems(group(base, "subject"), "subject");
   } else if (!path.chapter) {
     content = directoryItems(group(base.filter(q => q.subject === path.subject), "chapter"), "chapter");
-  } else if (!path.knowledge) {
-    content = directoryItems(group(base.filter(q => q.subject === path.subject && q.chapter === path.chapter), "knowledge"), "knowledge");
   } else {
-    const questions = base.filter(q => q.subject === path.subject && q.chapter === path.chapter && q.knowledge === path.knowledge);
-    content = `<div class="question-list">${questions.map(questionRow).join("")}</div>`;
+    const questions = base.filter(q => q.subject === path.subject && q.chapter === path.chapter);
+    content = catalogQuestionGroups(questions);
   }
   main.innerHTML = `<section class="catalog"><h1 class="page-title">错题目录</h1><p class="page-subtitle">${app.data.length} 道已归档错题</p><div class="breadcrumbs">${breadcrumb.join("")}</div>${content}</section>`;
+}
+
+function catalogQuestionGroups(questions) {
+  const order = ["单选题", "多选题", "主观题"];
+  return `<div class="catalog-question-groups">${order.map(type => {
+    const items = questions.filter(question => catalogQuestionType(question) === type);
+    if (!items.length) return "";
+    return `<section class="catalog-question-group"><div class="catalog-group-head"><h2>${type}</h2><span>${items.length} 道</span></div><div class="question-list">${items.map((question, index) => questionRow(question, index + 1)).join("")}</div></section>`;
+  }).join("")}</div>`;
 }
 
 function group(items, key) {
@@ -309,8 +322,9 @@ function directoryItems(groups, level) {
   }).join("")}</div>`;
 }
 
-function questionRow(question) {
-  return `<button class="question-row" data-open-question="${question.id}"><span><strong>${escapeHtml(question.title)}</strong><br><small>${escapeHtml(question.type)}</small></span><span class="badge ${question.uncertain ? "warn" : ""}">${question.uncertain ? "存疑" : question.interactive ? "可作答" : "查阅"}</span></button>`;
+function questionRow(question, number = null) {
+  const prefix = number === null ? "" : `<span class="question-number">${number}.</span>`;
+  return `<button class="question-row" data-open-question="${question.id}"><span class="question-row-main">${prefix}<span><strong>${escapeHtml(question.title)}</strong><br><small>${escapeHtml(question.knowledge)}</small></span></span><span class="badge ${question.uncertain ? "warn" : ""}">${question.uncertain ? "存疑" : question.interactive ? "可作答" : "查阅"}</span></button>`;
 }
 
 function renderFavorites() {
