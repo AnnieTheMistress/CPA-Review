@@ -6,7 +6,7 @@
     "税法": 122,
     "经济法": 151
   },
-  "interactiveCount": 364,
+  "interactiveCount": 365,
   "questions": [
     {
       "id": "de8562cea686135e3e73",
@@ -1549,19 +1549,19 @@
           "text": "20 年"
         }
       ],
-      "myAnswer": "B",
-      "correctAnswer": "D",
+      "myAnswer": "D",
+      "correctAnswer": "A",
       "correctKeys": [
-        "D"
+        "A"
       ],
-      "answerMode": "",
+      "answerMode": "single",
       "reason": "1、**无形资产使用寿命的确认（基础题，不应该错！！！）**\n2、使用寿命的确认（孰短）：① 法定/合同约定年限；② 经济寿命；③ 企业计划使用年限",
-      "check": "存疑：Word标注正确答案D（20年），按用户确认原样保留，不擅自更正；但该答案与题面剩余法定期限、预计受益期限及管理层计划存在明显冲突，复习时应回看原题正式解析。",
-      "analysis": "本题按Word标注的正确答案为D。逐项判断时以“无形资产摊销”规则为主线；上方核对已对原错因中的不准确、遗漏或存疑处作补充。",
-      "source": "Word《CPA错题合集-会计》 · 同步日期 2026-08-23",
+      "check": "",
+      "analysis": "无形资产的使用寿命应综合考虑法定或合同约定年限、预计带来经济利益的期间以及企业计划使用年限，并按其中较短者确定。本题剩余法定保护期为15年、预计经济寿命为8年、企业计划使用3年后出售，因此使用寿命为3年，正确答案为A。",
+      "source": "Word《CPA错题合集-会计》 · 同步日期 2026-08-28",
       "sourceNote": "CPA学习/会计/知识点/会计04_无形资产摊销.md",
-      "interactive": false,
-      "uncertain": true
+      "interactive": true,
+      "uncertain": false
     },
     {
       "id": "5e54847794ed02a411bf",
