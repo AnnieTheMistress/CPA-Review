@@ -487,8 +487,8 @@ async function loadExam(examId) {
   app.filters = { subject: "", chapter: "", type: "", status: "" };
   app.catalog = { subject: null, chapter: null, knowledge: null };
   const [payload, aliases] = await Promise.all([
-    fetch(exam.questions).then(response => { if (!response.ok) throw new Error(`${exam.name} 题库载入失败`); return response.json(); }),
-    fetch(exam.aliases).then(response => response.ok ? response.json() : {}).catch(() => ({})),
+    fetch(exam.questions, { cache: "no-store" }).then(response => { if (!response.ok) throw new Error(`${exam.name} 题库载入失败`); return response.json(); }),
+    fetch(exam.aliases, { cache: "no-store" }).then(response => response.ok ? response.json() : {}).catch(() => ({})),
   ]);
   app.data = payload.questions;
   app.byId = new Map(app.data.map(item => [item.id, item]));
@@ -512,7 +512,7 @@ async function switchExam(examId) {
   }
 }
 
-fetch("data/exams.json")
+fetch("data/exams.json", { cache: "no-store" })
   .then(response => { if (!response.ok) throw new Error("考试清单载入失败"); return response.json(); })
   .then(async exams => {
     app.exams = exams;
