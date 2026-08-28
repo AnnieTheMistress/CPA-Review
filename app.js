@@ -265,7 +265,7 @@ function renderPractice() {
     <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
     <div class="split-question">
       <section class="question-pane">
-        <div class="question-type ${question.answerMode}">${escapeHtml(typeLabel)}</div>
+        <div class="question-meta"><span class="practice-question-number">第 ${app.cursor + 1} 题</span><span class="question-type ${question.answerMode}">${escapeHtml(typeLabel)}</span></div>
         <div class="markdown">${renderQuestionText(question)}</div>
         ${question.interactive ? `<div class="options ${question.answerMode}">${options}</div>` : ""}
         <div class="question-actions">
