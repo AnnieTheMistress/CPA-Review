@@ -4,5 +4,11 @@
     "name": "CPA",
     "questions": "data/cpa/questions.json",
     "aliases": "data/cpa/question-aliases.json"
+  },
+  {
+    "id": "intermediate",
+    "name": "中级会计",
+    "questions": "data/intermediate/questions.json",
+    "aliases": "data/intermediate/question-aliases.json"
   }
 ]
