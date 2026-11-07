@@ -261,7 +261,7 @@ function sameKeys(left, right) {
 
 function renderPractice() {
   const question = currentQuestion();
-  if (!question) return renderEmpty("当前筛选下没有题目");
+  if (!question) return renderEmpty(app.data.length ? "当前筛选下没有题目" : "当前考试题库暂无题目，归档错题并生成题库后即可开始复习。");
   const progress = progressFor(question.id);
   const objectiveMode = objectiveAnswerMode(question);
   const options = question.options.map(option => {
@@ -302,7 +302,7 @@ function renderCatalog() {
   if (path.knowledge) breadcrumb.push(`<span>›</span><span>${escapeHtml(path.knowledge)}</span>`);
   let content;
   if (!path.subject) {
-    content = directoryItems(group(base, "subject"), "subject");
+    content = base.length ? directoryItems(group(base, "subject"), "subject") : renderEmpty("当前考试题库暂无题目，归档错题并生成题库后即可开始复习。", false);
   } else if (!path.chapter) {
     content = directoryItems(group(base.filter(q => q.subject === path.subject), "chapter"), "chapter");
   } else {

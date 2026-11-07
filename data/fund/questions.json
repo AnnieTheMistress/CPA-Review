@@ -1,0 +1,1054 @@
+{
+  "generatedAt": "2026-11-07",
+  "count": 23,
+  "subjects": {
+    "科目一": 23
+  },
+  "interactiveCount": 16,
+  "questions": [
+    {
+      "id": "2f54ae77c3f65edcb2bf",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 1,
+      "title": "莽过教育第1题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "1.下列属于金融市场按交易标的物划分的是（ ）。\n①货币市场②资本市场\n③现货市场④期货市场\nA. ①②\nB. ①③\nC. ②③\nD. ③④",
+      "options": [
+        {
+          "key": "A",
+          "text": "①②"
+        },
+        {
+          "key": "B",
+          "text": "①③"
+        },
+        {
+          "key": "C",
+          "text": "②③"
+        },
+        {
+          "key": "D",
+          "text": "③④"
+        }
+      ],
+      "myAnswer": "D",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：按交易标的划分是货币市场与资本市场；现货和期货按交割期限划分。",
+      "analysis": "按交易标的划分是货币市场与资本市场；现货和期货按交割期限划分。",
+      "source": "莽过教育·基础练习·第一章第一节·第1题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "be0c775ca34e39906722",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 2,
+      "title": "莽过教育第2题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "2.金融市场分类不包括（ ）。\nA. 按交易标的物分类\nB. 按融资方式分类\nC. 按交易区域分类\nD. 按交割期限分类",
+      "options": [
+        {
+          "key": "A",
+          "text": "按交易标的物分类"
+        },
+        {
+          "key": "B",
+          "text": "按融资方式分类"
+        },
+        {
+          "key": "C",
+          "text": "按交易区域分类"
+        },
+        {
+          "key": "D",
+          "text": "按交割期限分类"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "C",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源选择C，但按地域范围划分国内与国际金融市场也是常见分类，题干排他性存疑。",
+      "analysis": "来源选择C，但按地域范围划分国内与国际金融市场也是常见分类，题干排他性存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第2题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "02acfd874f104b39e0a5",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 3,
+      "title": "莽过教育第3题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "3.按金融市场主体的参与身份划分，金融市场主体不包括（ ）。\nA. 政府\nB. 中央银行\nC. 社会团体\nD. 个人",
+      "options": [
+        {
+          "key": "A",
+          "text": "政府"
+        },
+        {
+          "key": "B",
+          "text": "中央银行"
+        },
+        {
+          "key": "C",
+          "text": "社会团体"
+        },
+        {
+          "key": "D",
+          "text": "个人"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "C",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源按常见主体分类选择C；社会团体也可能参与金融市场，题干绝对化，存疑。",
+      "analysis": "来源按常见主体分类选择C；社会团体也可能参与金融市场，题干绝对化，存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第3题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "e7ffeb9551eef360b82b",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 4,
+      "title": "莽过教育第4题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "4.资本市场是指进行中长期资金交易的市场，通常为（ ）以上。\nA. 1年\nB. 3年\nC. 5年\nD. 10年",
+      "options": [
+        {
+          "key": "A",
+          "text": "1年"
+        },
+        {
+          "key": "B",
+          "text": "3年"
+        },
+        {
+          "key": "C",
+          "text": "5年"
+        },
+        {
+          "key": "D",
+          "text": "10年"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：资本市场一般涉及一年以上中长期资金融通。",
+      "analysis": "资本市场一般涉及一年以上中长期资金融通。",
+      "source": "莽过教育·基础练习·第一章第一节·第4题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "8da4fe9765ba1843d6c9",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 5,
+      "title": "莽过教育第5题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "5.直接融资市场以（ ）为主导，资金供需双方直接建立股权或债权债务等关系。\nA. 资本市场\nB. 货币市场\nC. 票据市场\nD. 回购市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "资本市场"
+        },
+        {
+          "key": "B",
+          "text": "货币市场"
+        },
+        {
+          "key": "C",
+          "text": "票据市场"
+        },
+        {
+          "key": "D",
+          "text": "回购市场"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "A",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源选A，直接融资与期限分类并不等同；直接融资也可发生在货币市场，主导表述缺少依据，存疑。",
+      "analysis": "来源选A，直接融资与期限分类并不等同；直接融资也可发生在货币市场，主导表述缺少依据，存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第5题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "e4914876fc7622017da3",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 6,
+      "title": "莽过教育第6题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "6.（ ）是指资金需求方通过银行等金融机构融通资金的市场。\nA. 直接融资市场\nB. 间接融资市场\nC. 资本市场\nD. 货币市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "直接融资市场"
+        },
+        {
+          "key": "B",
+          "text": "间接融资市场"
+        },
+        {
+          "key": "C",
+          "text": "资本市场"
+        },
+        {
+          "key": "D",
+          "text": "货币市场"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：银行作为信用中介吸收资金再提供贷款属于间接融资；是否直接融资取决于中介的角色。",
+      "analysis": "银行作为信用中介吸收资金再提供贷款属于间接融资；是否直接融资取决于中介的角色。",
+      "source": "莽过教育·基础练习·第一章第一节·第6题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "1eb7a1acaf48112b2205",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 7,
+      "title": "莽过教育第7题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "7.我国典型的场外交易不包括（ ）。\nA. 银行间债券市场\nB. 代办股份转让系统\nC. 债券柜台交易市场\nD. 证券交易所市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "银行间债券市场"
+        },
+        {
+          "key": "B",
+          "text": "代办股份转让系统"
+        },
+        {
+          "key": "C",
+          "text": "债券柜台交易市场"
+        },
+        {
+          "key": "D",
+          "text": "证券交易所市场"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "D",
+      "correctKeys": [
+        "D"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：证券交易所市场属于场内市场；题中所列其他形式属于场外市场。",
+      "analysis": "证券交易所市场属于场内市场；题中所列其他形式属于场外市场。",
+      "source": "莽过教育·基础练习·第一章第一节·第7题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "ed32b0c1607a4298b6fc",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 8,
+      "title": "莽过教育第8题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "8.国际金融市场经营内容包括（ ）。\nⅠ.资金借贷\nⅡ.外汇买卖\nⅢ.证券买卖\nⅣ.资金交易\nA. Ⅰ、Ⅱ、Ⅲ、Ⅳ\nB. Ⅰ、Ⅱ、Ⅳ\nC. Ⅱ、Ⅲ、Ⅳ\nD. Ⅰ、Ⅲ、Ⅳ",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ⅰ、Ⅱ、Ⅲ、Ⅳ"
+        },
+        {
+          "key": "B",
+          "text": "Ⅰ、Ⅱ、Ⅳ"
+        },
+        {
+          "key": "C",
+          "text": "Ⅱ、Ⅲ、Ⅳ"
+        },
+        {
+          "key": "D",
+          "text": "Ⅰ、Ⅲ、Ⅳ"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：国际金融业务包括资金借贷、外汇与证券交易等。",
+      "analysis": "国际金融业务包括资金借贷、外汇与证券交易等。",
+      "source": "莽过教育·基础练习·第一章第一节·第8题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "ce07d9e2e41f5edcb260",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 9,
+      "title": "莽过教育第9题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "9.（ ）是现代金融体系的两大运作载体。\nA. 基金市场和股票市场\nB. 金融市场和金融机构\nC. 股票市场和债券市场\nD. 期货市场和股票市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "基金市场和股票市场"
+        },
+        {
+          "key": "B",
+          "text": "金融市场和金融机构"
+        },
+        {
+          "key": "C",
+          "text": "股票市场和债券市场"
+        },
+        {
+          "key": "D",
+          "text": "期货市场和股票市场"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：金融市场和金融机构是两大运作载体；股票、债券等是金融市场的组成部分。",
+      "analysis": "金融市场和金融机构是两大运作载体；股票、债券等是金融市场的组成部分。",
+      "source": "莽过教育·基础练习·第一章第一节·第9题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "64c65d43a9e3c1aa46be",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 10,
+      "title": "莽过教育第10题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "10.目前，我国国务院批准或同意设立的证券及其他金融交易所共有（ ）。\nA. 5家\nB. 7家\nC. 8家\nD. 10家",
+      "options": [
+        {
+          "key": "A",
+          "text": "5家"
+        },
+        {
+          "key": "B",
+          "text": "7家"
+        },
+        {
+          "key": "C",
+          "text": "8家"
+        },
+        {
+          "key": "D",
+          "text": "10家"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "D",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源给出10家，并把全国中小企业股份转让系统列入；数量与统计口径有时效性，且机构性质需核验，存疑。",
+      "analysis": "来源给出10家，并把全国中小企业股份转让系统列入；数量与统计口径有时效性，且机构性质需核验，存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第10题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "5902d6f45ef039e1c5af",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 11,
+      "title": "莽过教育第12题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "12.（ ）是金融市场的必备构成要素之一。\nA. 交易时间\nB. 交易场所\nC. 交易目的\nD. 交易中介",
+      "options": [
+        {
+          "key": "A",
+          "text": "交易时间"
+        },
+        {
+          "key": "B",
+          "text": "交易场所"
+        },
+        {
+          "key": "C",
+          "text": "交易目的"
+        },
+        {
+          "key": "D",
+          "text": "交易中介"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "D",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源称交易中介不可或缺，但市场构成的划分口径不同，不能据此断言每笔交易都必须经中介；题目存疑。",
+      "analysis": "来源称交易中介不可或缺，但市场构成的划分口径不同，不能据此断言每笔交易都必须经中介；题目存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第12题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "9d23189bd0307b9e87da",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 12,
+      "title": "莽过教育第13题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "13.金融机构在金融市场上充当的角色不包括（ ）。\nA. 中介人\nB. 监管者\nC. 资金的需求者\nD. 资金的供给者",
+      "options": [
+        {
+          "key": "A",
+          "text": "中介人"
+        },
+        {
+          "key": "B",
+          "text": "监管者"
+        },
+        {
+          "key": "C",
+          "text": "资金的需求者"
+        },
+        {
+          "key": "D",
+          "text": "资金的供给者"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：一般金融机构可作为中介、资金需求者和供给者；监管职能应依具体法律职责区分。",
+      "analysis": "一般金融机构可作为中介、资金需求者和供给者；监管职能应依具体法律职责区分。",
+      "source": "莽过教育·基础练习·第一章第一节·第13题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "a8ac0946a01dbee640a3",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 13,
+      "title": "莽过教育第14题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "14.现阶段我国金融市场体系属于（ ）。\nA. 资本主导型\nB. 银行主导型\nC. 货币主导型\nD. 政策主导型‌",
+      "options": [
+        {
+          "key": "A",
+          "text": "资本主导型"
+        },
+        {
+          "key": "B",
+          "text": "银行主导型"
+        },
+        {
+          "key": "C",
+          "text": "货币主导型"
+        },
+        {
+          "key": "D",
+          "text": "政策主导型‌"
+        }
+      ],
+      "myAnswer": "D",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：来源按银行在我国金融体系中的重要地位选择银行主导型；这一判断具有阶段性。",
+      "analysis": "来源按银行在我国金融体系中的重要地位选择银行主导型；这一判断具有阶段性。",
+      "source": "莽过教育·基础练习·第一章第一节·第14题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "70a2f89a832f2ac3bad9",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 14,
+      "title": "莽过教育第15题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "15.下列不属于金融市场按照不同的交易标的物进行分类的是（ ）。\nA. 货币市场\nB. 基金市场\nC. 外汇市场\nD. 黄金市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "货币市场"
+        },
+        {
+          "key": "B",
+          "text": "基金市场"
+        },
+        {
+          "key": "C",
+          "text": "外汇市场"
+        },
+        {
+          "key": "D",
+          "text": "黄金市场"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "B",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源选B并以基金投资资产多样为理由，但基金份额本身也可作为交易对象，排除依据不足，存疑。",
+      "analysis": "来源选B并以基金投资资产多样为理由，但基金份额本身也可作为交易对象，排除依据不足，存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第15题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "c394a5b71978463004e3",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 15,
+      "title": "莽过教育第16题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "16.“金融市场提高了资金利用效率，使资金向高效率、高效用的地方流转，资金流转的过程带动了资源和财富的再分配。”这体现了金融市场的（ ）。\nA. 价格发现功能\nB. 资金融通功能\nC. 资产配置功能\nD. 经济反映功能",
+      "options": [
+        {
+          "key": "A",
+          "text": "价格发现功能"
+        },
+        {
+          "key": "B",
+          "text": "资金融通功能"
+        },
+        {
+          "key": "C",
+          "text": "资产配置功能"
+        },
+        {
+          "key": "D",
+          "text": "经济反映功能"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "C",
+      "correctKeys": [
+        "C"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：题干侧重资金流向及资源和财富再分配，对应资产配置功能。",
+      "analysis": "题干侧重资金流向及资源和财富再分配，对应资产配置功能。",
+      "source": "莽过教育·基础练习·第一章第一节·第16题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "b280cb1d464f60c2af89",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 16,
+      "title": "莽过教育第17题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "17.在金融市场主体中，以主要资金供给方身份参与金融市场的是（ ）。\nA. 非金融企业\nB. 个人\nC. 政府\nD. 中央银行",
+      "options": [
+        {
+          "key": "A",
+          "text": "非金融企业"
+        },
+        {
+          "key": "B",
+          "text": "个人"
+        },
+        {
+          "key": "C",
+          "text": "政府"
+        },
+        {
+          "key": "D",
+          "text": "中央银行"
+        }
+      ],
+      "myAnswer": "D",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：个人部门通常是重要的资金供给方；实际个体也可能是资金需求方。",
+      "analysis": "个人部门通常是重要的资金供给方；实际个体也可能是资金需求方。",
+      "source": "莽过教育·基础练习·第一章第一节·第17题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "3e192349c170452f2b3d",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 17,
+      "title": "莽过教育第18题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "18.在借贷关系中，影响交易价格的主要是（ ），在不违反法律法规的情况下，价格由交易双方协商确定。\nA. 汇率\nB. 利率\nC. 货币供应量\nD. 货币需求量",
+      "options": [
+        {
+          "key": "A",
+          "text": "汇率"
+        },
+        {
+          "key": "B",
+          "text": "利率"
+        },
+        {
+          "key": "C",
+          "text": "货币供应量"
+        },
+        {
+          "key": "D",
+          "text": "货币需求量"
+        }
+      ],
+      "myAnswer": "D",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：借贷资金的价格通常以利率体现，供需状况会影响利率。",
+      "analysis": "借贷资金的价格通常以利率体现，供需状况会影响利率。",
+      "source": "莽过教育·基础练习·第一章第一节·第18题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "455f1ef7c7a064cf3426",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 18,
+      "title": "莽过教育第19题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "19.“金融市场通过集中交易，减少了信息搜寻成本和交易成本，有利于金融资产快速买卖，提高了资金的流动性”这体现的是金融市场的（ ）功能。\nA. 经济反映\nB. 价格发现\nC. 风险管理\nD. 效率提升",
+      "options": [
+        {
+          "key": "A",
+          "text": "经济反映"
+        },
+        {
+          "key": "B",
+          "text": "价格发现"
+        },
+        {
+          "key": "C",
+          "text": "风险管理"
+        },
+        {
+          "key": "D",
+          "text": "效率提升"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "D",
+      "correctKeys": [
+        "D"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：降低信息与交易成本、提高流动性体现效率提升；具体功能名称依教材口径。",
+      "analysis": "降低信息与交易成本、提高流动性体现效率提升；具体功能名称依教材口径。",
+      "source": "莽过教育·基础练习·第一章第一节·第19题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "30196e614ab13e270dfc",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 19,
+      "title": "莽过教育第20题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "20.（ ）利用不同市场同一产品的价差、期货市场上不同期货合约之间的价差，或期货市场与现货市场不合理的价差，通过反向交易或建立多头与空头头寸，来获取无风险或低风险利润。\nA. 套利者\nB. 投机者\nC. 套期保值者\nD. 调控监管者",
+      "options": [
+        {
+          "key": "A",
+          "text": "套利者"
+        },
+        {
+          "key": "B",
+          "text": "投机者"
+        },
+        {
+          "key": "C",
+          "text": "套期保值者"
+        },
+        {
+          "key": "D",
+          "text": "调控监管者"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：套利利用不同市场或合约的价差；实际操作仍可能存在交易成本和执行风险。",
+      "analysis": "套利利用不同市场或合约的价差；实际操作仍可能存在交易成本和执行风险。",
+      "source": "莽过教育·基础练习·第一章第一节·第20题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "576aea73bd6d6291bd29",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 20,
+      "title": "莽过教育第21题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "21.（ ）在金融市场中处于特殊地位，它兼有金融市场参与主体和金融市场监管者的双重身份。\nA. 政府\nB. 中央银行\nC. 金融机构\nD. 企业",
+      "options": [
+        {
+          "key": "A",
+          "text": "政府"
+        },
+        {
+          "key": "B",
+          "text": "中央银行"
+        },
+        {
+          "key": "C",
+          "text": "金融机构"
+        },
+        {
+          "key": "D",
+          "text": "企业"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：来源答案为中央银行；央行可通过公开市场操作参与市场，也依法承担相应管理职责，具体监管分工以现行制度为准。",
+      "analysis": "来源答案为中央银行；央行可通过公开市场操作参与市场，也依法承担相应管理职责，具体监管分工以现行制度为准。",
+      "source": "莽过教育·基础练习·第一章第一节·第21题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "f4b9bf09bf3bfff10121",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 21,
+      "title": "莽过教育第22题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "22.广义的资本市场不包括（ ）。\nA. 银行中长期存贷款市场\nB. 票据市场\nC. 中长期债券市场\nD. 股票市场",
+      "options": [
+        {
+          "key": "A",
+          "text": "银行中长期存贷款市场"
+        },
+        {
+          "key": "B",
+          "text": "票据市场"
+        },
+        {
+          "key": "C",
+          "text": "中长期债券市场"
+        },
+        {
+          "key": "D",
+          "text": "股票市场"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：广义资本市场包含中长期存贷款及证券市场；票据市场一般属于短期货币市场。",
+      "analysis": "广义资本市场包含中长期存贷款及证券市场；票据市场一般属于短期货币市场。",
+      "source": "莽过教育·基础练习·第一章第一节·第22题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": true,
+      "uncertain": false
+    },
+    {
+      "id": "17cffd7e419f592fba21",
+      "subject": "科目一",
+      "chapterCode": "01",
+      "chapter": "第1章 金融市场与资产管理",
+      "knowledge": "金融市场",
+      "entryNo": 22,
+      "title": "莽过教育第23题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "23.一般将金融市场中股票、债券、证券投资基金、期货合约、标准化期权合约等标准化、可交易的具体对象统称为（ ）。\nA. 标的物\nB. 金融产品\nC. 金融资产\nD. 金融工具",
+      "options": [
+        {
+          "key": "A",
+          "text": "标的物"
+        },
+        {
+          "key": "B",
+          "text": "金融产品"
+        },
+        {
+          "key": "C",
+          "text": "金融资产"
+        },
+        {
+          "key": "D",
+          "text": "金融工具"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "D",
+      "correctKeys": [],
+      "answerMode": "",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：来源选金融工具；金融工具、金融产品等术语使用存在口径差异，不能单凭标准化断定唯一答案，存疑。",
+      "analysis": "来源选金融工具；金融工具、金融产品等术语使用存在口径差异，不能单凭标准化断定唯一答案，存疑。",
+      "source": "莽过教育·基础练习·第一章第一节·第23题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/01-金融市场.md",
+      "interactive": false,
+      "uncertain": true
+    },
+    {
+      "id": "c378f68260b160681ffe",
+      "subject": "科目一",
+      "chapterCode": "05",
+      "chapter": "第5章 基金活动的法规要求",
+      "knowledge": "公募基金",
+      "entryNo": 1,
+      "title": "莽过教育第11题",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-08",
+      "reviewCount": 0,
+      "question": "11.开放式基金募集期间，按照基金份额面值认购；在基金申购、赎回中，遵从（ ）。\nA. “未知价”原则\nB. 时间优先原则\nC. 价格优先原则\nD. 限价申报原则",
+      "options": [
+        {
+          "key": "A",
+          "text": "“未知价”原则"
+        },
+        {
+          "key": "B",
+          "text": "时间优先原则"
+        },
+        {
+          "key": "C",
+          "text": "价格优先原则"
+        },
+        {
+          "key": "D",
+          "text": "限价申报原则"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 用户未提供错因，AI 根据题目和来源解析分析：申购赎回通常以申请日收市后计算的基金份额净值为基准，即未知价原则；具体以基金合同和业务规则为准。",
+      "analysis": "申购赎回通常以申请日收市后计算的基金份额净值为基准，即未知价原则；具体以基金合同和业务规则为准。",
+      "source": "莽过教育·基础练习·第一章第一节·第11题，查看日期 2026-11-07；参考答案为来源所示。",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/05-公募基金.md",
+      "interactive": true,
+      "uncertain": false
+    }
+  ]
+}

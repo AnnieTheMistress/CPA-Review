@@ -10,5 +10,11 @@
     "name": "中级会计",
     "questions": "data/intermediate/questions.json",
     "aliases": "data/intermediate/question-aliases.json"
+  },
+  {
+    "id": "fund",
+    "name": "基金从业",
+    "questions": "data/fund/questions.json",
+    "aliases": "data/fund/question-aliases.json"
   }
 ]
