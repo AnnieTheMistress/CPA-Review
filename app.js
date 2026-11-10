@@ -170,6 +170,10 @@ function objectiveAnswerMode(question) {
   return "";
 }
 
+function canSelectAnswer(question) {
+  return question.interactive || (question.uncertain && question.type === "客观" && question.options.length >= 2);
+}
+
 function catalogQuestionType(question) {
   const mode = objectiveAnswerMode(question);
   if (mode === "single") return "单选题";
@@ -266,10 +270,10 @@ function renderPractice() {
   const objectiveMode = objectiveAnswerMode(question);
   const options = question.options.map(option => {
     const selected = app.selected.has(option.key);
-    const graded = app.submitted ? question.correctKeys.includes(option.key) ? "correct" : selected ? "wrong" : "" : "";
+    const graded = app.submitted && !question.uncertain ? question.correctKeys.includes(option.key) ? "correct" : selected ? "wrong" : "" : "";
     const control = selected ? (objectiveMode === "multiple" ? "✓" : "•") : "";
-    const optionAction = question.interactive ? `data-option="${option.key}"` : "";
-    return `<button class="option ${objectiveMode} ${selected ? "selected" : ""} ${graded}" ${optionAction} ${app.submitted || !question.interactive ? "disabled" : ""}><span class="choice-control" aria-hidden="true">${control}</span><span class="option-key">${option.key}</span><span>${inlineMarkdown(option.text)}</span></button>`;
+    const optionAction = canSelectAnswer(question) ? `data-option="${option.key}"` : "";
+    return `<button class="option ${objectiveMode} ${selected ? "selected" : ""} ${graded}" ${optionAction} ${app.submitted || !canSelectAnswer(question) ? "disabled" : ""}><span class="choice-control" aria-hidden="true">${control}</span><span class="option-key">${option.key}</span><span>${inlineMarkdown(option.text)}</span></button>`;
   }).join("");
   const typeLabel = objectiveMode === "multiple" ? `多选题${question.uncertain ? " · 答案存疑" : " · 可选择多个答案"}` : objectiveMode === "single" ? `单选题${question.uncertain ? " · 答案存疑" : ""}` : question.type;
   document.querySelector("#main").innerHTML = `<div class="practice">
@@ -280,7 +284,7 @@ function renderPractice() {
         <div class="markdown">${renderQuestionText(question)}</div>
         ${question.options.length ? `<div class="options ${objectiveMode}">${options}</div>` : ""}
         <div class="question-actions">
-          ${question.interactive ? app.submitted ? `<button class="secondary-button" data-action="retry-question">重新作答</button>` : `<button class="primary-button" data-action="submit" ${!app.selected.size ? "disabled" : ""}>提交答案</button>` : `<button class="primary-button" data-action="reveal">${app.reveal ? "收起解析" : "展开答案与解析"}</button>`}
+          ${canSelectAnswer(question) ? app.submitted ? `<button class="secondary-button" data-action="retry-question">重新作答</button>` : `<button class="primary-button" data-action="submit" ${!app.selected.size ? "disabled" : ""}>提交答案</button>` : `<button class="primary-button" data-action="reveal">${app.reveal ? "收起解析" : "展开答案与解析"}</button>`}
           <button class="compact-button ${progress.favorite ? "active" : ""}" data-action="favorite">${progress.favorite ? "★ 已收藏" : "☆ 收藏"}</button>
           <span class="spacer"></span>
           <button class="secondary-button" data-action="previous" ${app.cursor === 0 ? "disabled" : ""}>←</button>
@@ -381,6 +385,11 @@ function render() {
 
 function submitAnswer(question) {
   app.submitted = true;
+  if (question.uncertain) {
+    updateProgress(question.id, { lastAnswer: [...app.selected], lastReviewed: new Date().toISOString() });
+    render();
+    return;
+  }
   const correct = sameKeys([...app.selected], question.correctKeys);
   const previous = progressFor(question.id);
   const reviewed = ReviewScheduler.updateReview(previous, correct);
@@ -436,7 +445,7 @@ document.addEventListener("click", event => {
   if (button.dataset.view) { app.view = button.dataset.view; render(); return; }
   if (button.dataset.option) {
     const question = currentQuestion();
-    if (question.answerMode === "single") app.selected = new Set([button.dataset.option]);
+    if (objectiveAnswerMode(question) === "single") app.selected = new Set([button.dataset.option]);
     else app.selected.has(button.dataset.option) ? app.selected.delete(button.dataset.option) : app.selected.add(button.dataset.option);
     render(); return;
   }
