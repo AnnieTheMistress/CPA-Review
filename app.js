@@ -13,7 +13,7 @@ const app = {
   submitted: false,
   reveal: false,
   knowledgeState: new Map(),
-  catalog: { subject: null, chapter: null, knowledge: null },
+  catalog: { subject: null, chapter: null, section: null, knowledge: null },
   filters: { subject: "", chapter: "", type: "", status: "" },
   state: loadState(),
 };
@@ -277,7 +277,7 @@ function renderPractice() {
   }).join("");
   const typeLabel = objectiveMode === "multiple" ? `多选题${question.uncertain ? " · 答案存疑" : " · 可选择多个答案"}` : objectiveMode === "single" ? `单选题${question.uncertain ? " · 答案存疑" : ""}` : question.type;
   document.querySelector("#main").innerHTML = `<div class="practice">
-    <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
+    <div class="practice-head"><div class="eyebrow">${escapeHtml(question.subject)} · ${escapeHtml(question.chapter)} · ${escapeHtml(question.section || question.knowledge)}</div><div class="counter">${app.cursor + 1} / ${app.queue.length}</div></div>
     <div class="split-question">
       <section class="question-pane">
         <div class="question-meta"><span class="practice-question-number">第 ${app.cursor + 1} 题</span><span class="question-type ${objectiveMode} ${question.uncertain ? "uncertain" : ""}">${escapeHtml(typeLabel)}</span></div>
@@ -303,6 +303,7 @@ function renderCatalog() {
   const breadcrumb = [`<button data-catalog-level="root">全部科目</button>`];
   if (path.subject) breadcrumb.push(`<span>›</span><button data-catalog-level="subject">${escapeHtml(path.subject)}</button>`);
   if (path.chapter) breadcrumb.push(`<span>›</span><button data-catalog-level="chapter">${escapeHtml(path.chapter)}</button>`);
+  if (path.section) breadcrumb.push(`<span>›</span><span>${escapeHtml(path.section)}</span>`);
   if (path.knowledge) breadcrumb.push(`<span>›</span><span>${escapeHtml(path.knowledge)}</span>`);
   let content;
   if (!path.subject) {
@@ -311,7 +312,13 @@ function renderCatalog() {
     content = directoryItems(group(base.filter(q => q.subject === path.subject), "chapter"), "chapter");
   } else {
     const questions = base.filter(q => q.subject === path.subject && q.chapter === path.chapter);
-    content = catalogQuestionGroups(questions);
+    if (!path.section && questions.some(q => q.section)) {
+      const sections = questions.map(q => ({ ...q, section: q.section || "未标注小节" }));
+      content = directoryItems(group(sections, "section"), "section");
+    } else {
+      const items = path.section ? questions.filter(q => (q.section || "未标注小节") === path.section) : questions;
+      content = catalogQuestionGroups(items);
+    }
   }
   main.innerHTML = `<section class="catalog"><h1 class="page-title">错题目录</h1><p class="page-subtitle">${app.data.length} 道已归档错题</p><div class="breadcrumbs">${breadcrumb.join("")}</div>${content}</section>`;
 }
@@ -328,7 +335,7 @@ function catalogQuestionGroups(questions) {
 function group(items, key) {
   const grouped = new Map();
   for (const item of items) grouped.set(item[key], [...(grouped.get(item[key]) || []), item]);
-  return [...grouped.entries()].sort((a, b) => a[0].localeCompare(b[0], "zh-CN"));
+  return [...grouped.entries()].sort((a, b) => a[0].localeCompare(b[0], "zh-CN", { numeric: true }));
 }
 
 function directoryItems(groups, level) {
@@ -451,10 +458,16 @@ document.addEventListener("click", event => {
   }
   if (button.dataset.mastery) { updateProgress(currentQuestion().id, { mastery: button.dataset.mastery }); render(); return; }
   if (button.dataset.openQuestion) { document.querySelector("#search-dialog").close(); openQuestion(button.dataset.openQuestion); return; }
-  if (button.dataset.catalogPick) { app.catalog[button.dataset.catalogPick] = button.dataset.value; render(); return; }
-  if (button.dataset.catalogLevel === "root") app.catalog = { subject: null, chapter: null, knowledge: null };
-  if (button.dataset.catalogLevel === "subject") app.catalog = { ...app.catalog, chapter: null, knowledge: null };
-  if (button.dataset.catalogLevel === "chapter") app.catalog.knowledge = null;
+  if (button.dataset.catalogPick) {
+    const level = button.dataset.catalogPick;
+    if (level === "subject") app.catalog = { subject: button.dataset.value, chapter: null, section: null, knowledge: null };
+    else if (level === "chapter") app.catalog = { ...app.catalog, chapter: button.dataset.value, section: null, knowledge: null };
+    else app.catalog[level] = button.dataset.value;
+    render(); return;
+  }
+  if (button.dataset.catalogLevel === "root") app.catalog = { subject: null, chapter: null, section: null, knowledge: null };
+  if (button.dataset.catalogLevel === "subject") app.catalog = { ...app.catalog, chapter: null, section: null, knowledge: null };
+  if (button.dataset.catalogLevel === "chapter") app.catalog = { ...app.catalog, section: null, knowledge: null };
   if (button.dataset.catalogLevel) { render(); return; }
   const action = button.dataset.action;
   if (action === "submit") submitAnswer(currentQuestion());
@@ -505,7 +518,7 @@ async function loadExam(examId) {
   if (!exam) throw new Error("没有可用的考试题库");
   app.examId = exam.id;
   app.filters = { subject: "", chapter: "", type: "", status: "" };
-  app.catalog = { subject: null, chapter: null, knowledge: null };
+  app.catalog = { subject: null, chapter: null, section: null, knowledge: null };
   const [payload, aliases] = await Promise.all([
     fetch(exam.questions, { cache: "no-store" }).then(response => { if (!response.ok) throw new Error(`${exam.name} 题库载入失败`); return response.json(); }),
     fetch(exam.aliases, { cache: "no-store" }).then(response => response.ok ? response.json() : {}).catch(() => ({})),
