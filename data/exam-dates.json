@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-12T08:24:10.067356+00:00",
+  "updatedAt": "2026-11-12T20:49:30.413824+00:00",
   "years": {
     "2026": {
       "cpa": {
         "status": "published",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
-        "checkedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
+        "checkedAt": "2026-11-12T20:49:30.413824+00:00",
         "sessions": [
           {
             "id": "cpa-2026-08-29",
@@ -15,14 +15,14 @@
             "label": "内地及港澳专业阶段",
             "sourceUrl": "https://cicpa.org.cn/xxfb/tzgg/202512/t20251210_65740.html",
             "sourceTitle": "关于发布2026年注册会计师全国统一考试报名时间和考试时间的公告",
-            "verifiedAt": "2026-11-12T08:24:10.067356+00:00"
+            "verifiedAt": "2026-11-12T20:49:30.413824+00:00"
           }
         ]
       },
       "intermediate": {
         "status": "published",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
-        "checkedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
+        "checkedAt": "2026-11-12T20:49:30.413824+00:00",
         "sessions": [
           {
             "id": "intermediate-2026-09-05",
@@ -31,14 +31,14 @@
             "label": "中级会计",
             "sourceUrl": "https://kjs.mof.gov.cn/gongzuotongzhi/202511/t20251127_3977584.htm",
             "sourceTitle": "关于2026年度全国会计专业技术资格考试考务日程安排及有关事项的通知",
-            "verifiedAt": "2026-11-12T08:24:10.067356+00:00"
+            "verifiedAt": "2026-11-12T20:49:30.413824+00:00"
           }
         ]
       },
       "fund": {
         "status": "published",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
-        "checkedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
+        "checkedAt": "2026-11-12T20:49:30.413824+00:00",
         "sessions": [
           {
             "id": "fund-2026-05-23",
@@ -47,7 +47,7 @@
             "label": "全国统一考试",
             "sourceUrl": "https://www.amac.org.cn/fwdt/wyb/rygl/cyks/cykstz/202604/t20260427_27624.html",
             "sourceTitle": "2026年5月基金从业资格考试公告",
-            "verifiedAt": "2026-11-12T08:24:10.067356+00:00"
+            "verifiedAt": "2026-11-12T20:49:30.413824+00:00"
           },
           {
             "id": "fund-2026-11-28",
@@ -56,7 +56,7 @@
             "label": "全国统一考试",
             "sourceUrl": "https://www.amac.org.cn/fwdt/wyb/rygl/cyks/cykstz/202611/t20261103_28194.html",
             "sourceTitle": "2026年11月基金从业资格考试公告",
-            "verifiedAt": "2026-11-12T08:24:10.067356+00:00"
+            "verifiedAt": "2026-11-12T20:49:30.413824+00:00"
           }
         ]
       }
@@ -64,19 +64,19 @@
     "2027": {
       "cpa": {
         "status": "unpublished",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
         "checkedAt": null,
         "sessions": []
       },
       "intermediate": {
         "status": "unpublished",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
         "checkedAt": null,
         "sessions": []
       },
       "fund": {
         "status": "unpublished",
-        "attemptedAt": "2026-11-12T08:24:10.067356+00:00",
+        "attemptedAt": "2026-11-12T20:49:30.413824+00:00",
         "checkedAt": null,
         "sessions": []
       }
