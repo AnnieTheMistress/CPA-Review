@@ -114,8 +114,22 @@ function workspaceDateCard(examName) {
   return `<section class="workspace-card countdown-card"><h2>考试倒计时</h2><span class="badge">${escapeHtml(examName)}</span><p>${countdown ? countdown.label : "考试安排"}</p><div class="countdown-value"><strong>${countdown?.days === 0 ? "今天" : countdown ? Math.abs(countdown.days) : "—"}</strong><span>${countdown?.days === 0 ? "" : countdown?.days < 0 ? "天前" : "天"}</span></div>${range ? `<p>${escapeHtml(range)}</p>` : ""}<p>${escapeHtml(workspaceDateDescription(date))}${date.sourceUrl ? `<br><a href="${escapeHtml(date.sourceUrl)}" target="_blank" rel="noopener noreferrer">查看官网公告 ↗</a>` : ""}</p><button class="secondary-button" data-workspace="date">${date.date ? "修改考试日期" : "设置考试日期"}</button>${date.mode === "manual" ? `<button class="link-button" data-workspace="clear-date">恢复官网日期</button>` : ""}</section>`;
 }
 
+function workspaceSubjectLabel(subject) {
+  const names = {"科目一":"基金基础知识与法律法规","科目三":"私募股权投资基金基础知识"};
+  return app.examId === "fund" ? names[subject] || subject : subject;
+}
+
+function workspaceSubjectOrder(a,b) {
+  if (app.examId === "fund") {
+    const order = {"科目一":1,"科目三":3};
+    const difference = (order[a] || 99) - (order[b] || 99);
+    if (difference) return difference;
+  }
+  return a.localeCompare(b,"zh-CN",{numeric:true});
+}
+
 function workspaceSubject() {
-  const subjects = [...new Set(app.data.map(q => q.subject))].sort((a,b) => a.localeCompare(b,"zh-CN",{numeric:true}));
+  const subjects = [...new Set(app.data.map(q => q.subject))].sort(workspaceSubjectOrder);
   const selected = examState().workspace?.subject;
   return subjects.includes(selected) ? selected : subjects[0] || "";
 }
@@ -140,7 +154,7 @@ function renderWorkspace() {
   const selected = workspaceSubject();
   const questions = workspaceQuestions();
   const stats = ReviewWorkspace.summary(questions, examState().questions);
-  const subjects = [...group(app.data, "subject")].sort((a,b) => a[0].localeCompare(b[0],"zh-CN",{numeric:true}));
+  const subjects = [...group(app.data, "subject")].sort((a,b) => workspaceSubjectOrder(a[0],b[0]));
   const examName = app.exams.find(exam => exam.id === app.examId)?.name || "错题复习";
   const chapters = group(questions, "chapter").map(([chapter, items], index) => {
     const sections = items.some(q => q.section) ? group(items.map(q => ({...q, section:q.section || "其他题目"})), "section") : [];
@@ -150,10 +164,10 @@ function renderWorkspace() {
   const resume = app.byId.get(examState().workspace?.lastQuestionId);
   document.querySelector("#main").innerHTML = `<section class="workspace">
     <header class="workspace-head"><h1>工作台</h1><p>${escapeHtml(examName)} · 选择章节，或从今天的复习开始。</p></header>
-    <div class="workspace-subjects" aria-label="选择科目">${subjects.map(([subject,items]) => `<button class="secondary-button ${subject === selected ? "active" : ""}" data-workspace-subject="${escapeHtml(subject)}" aria-pressed="${subject === selected}">${escapeHtml(subject)} <span>${items.length}</span></button>`).join("")}</div>
+    <div class="workspace-subjects" aria-label="选择科目">${subjects.map(([subject,items]) => `<button class="secondary-button ${subject === selected ? "active" : ""}" data-workspace-subject="${escapeHtml(subject)}" aria-pressed="${subject === selected}">${escapeHtml(workspaceSubjectLabel(subject))} <span>${items.length}</span></button>`).join("")}</div>
     <div class="workspace-layout"><div class="workspace-primary">
       <section class="workspace-card"><div class="workspace-card-head"><div><h2>章节错题</h2><p>按章节与小节查看已收录的错题</p></div><button class="link-button" data-workspace="catalog">进入全部目录 →</button></div><div class="workspace-chapters">${chapters || `<p class="workbench-empty">当前考试暂无已归档错题，归档后会在这里显示。</p>`}</div></section>
-      <section class="workspace-today"><h2>今天的学习 <small>${escapeHtml(selected || examName)}</small></h2>
+      <section class="workspace-today"><h2>今天的学习 <small>${escapeHtml(workspaceSubjectLabel(selected) || examName)}</small></h2>
         <div class="workspace-card workspace-stat"><h3>今日新增错题</h3><div class="workspace-stat-value">${stats.added.length}<small>道</small></div><p>回看今天记录的错题</p><button class="secondary-button" data-workspace="new" ${stats.added.length ? "" : "disabled"}>查看新增</button></div>
         <div class="workspace-card workspace-stat"><h3>今日待复习</h3><div class="workspace-stat-value">${stats.due.length}<small>道</small></div><p>到期题与尚未练习的可判分题</p><button class="primary-button" data-workspace="daily" ${stats.due.length ? "" : "disabled"}>开始复习</button></div>
       </section>
