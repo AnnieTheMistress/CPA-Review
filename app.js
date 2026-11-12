@@ -573,5 +573,6 @@ fetch("data/exams.json", { cache: "no-store" })
     app.exams = exams;
     const initial = exams.some(exam => exam.id === app.state.currentExam) ? app.state.currentExam : exams[0]?.id;
     await loadExam(initial);
+    loadOfficialExamDates();
   })
   .catch(error => renderEmpty(error.message));

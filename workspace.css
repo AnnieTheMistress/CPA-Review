@@ -173,6 +173,8 @@ button, input, select, textarea { scroll-margin-block: 90px; }
 .workspace-notes .workspace-card-head { padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 6px; }
 .countdown-card p, .resume-card p { margin: 12px 0; color: var(--muted); font-size: 13px; line-height: 1.75; overflow-wrap: anywhere; }
 .countdown-card > .badge { margin-top: 10px; }
+.countdown-card a { color: var(--purple); text-underline-offset: 3px; }
+#official-exam-date { color: var(--muted); font-size: 13px; line-height: 1.75; }
 .countdown-value { display: flex; align-items: baseline; gap: 12px; margin: 30px 0 18px; color: var(--purple); }
 .countdown-value strong { font-size: 54px; line-height: 1.1; font-weight: 750; font-variant-numeric: tabular-nums; }
 .countdown-value span { color: var(--muted); font-size: 17px; }

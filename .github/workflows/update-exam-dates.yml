@@ -1,0 +1,43 @@
+name: Update official exam dates
+
+on:
+  schedule:
+    - cron: '17 1,13 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: official-exam-dates
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect official announcements
+        id: collect
+        continue-on-error: true
+        run: python scripts/update_exam_dates.py --output data/exam-dates.json
+      - name: Save the available verified snapshot
+        shell: bash
+        run: |
+          python -c 'import json; p=json.load(open("data/exam-dates.json",encoding="utf-8")); assert p["version"] == 1 and isinstance(p["years"],dict)'
+          if ! git diff --quiet -- data/exam-dates.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add -- data/exam-dates.json
+            git commit -m 'Update official exam schedule snapshot'
+            git push origin HEAD:main
+          fi
+      - name: Report incomplete verification
+        if: steps.collect.outcome == 'failure'
+        run: |
+          echo '::warning::Some official pages could not be verified. Available dates were saved; previous dates remain marked stale. Check source links and rerun when the publisher is reachable.'
+          exit 1

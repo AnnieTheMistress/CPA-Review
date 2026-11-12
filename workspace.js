@@ -43,10 +43,76 @@
     const days = Math.round((Date.parse(`${examDate}T00:00:00Z`) - Date.parse(`${day}T00:00:00Z`)) / 86400000);
     return { days, label: days > 0 ? "距考试还有" : days === 0 ? "今天考试" : "考试已结束" };
   }
-  const api = { validDay, recordedDay, summary, notes, noteUrl, countdown };
+  function officialSource(examId, url) {
+    const domains = { cpa:"cicpa\\.org\\.cn", intermediate:"mof\\.gov\\.cn", fund:"amac\\.org\\.cn" };
+    return Boolean(domains[examId] && typeof url === "string" && new RegExp(`^https://(?:[a-z0-9-]+\\.)*${domains[examId]}/[^\\s]*$`, "i").test(url));
+  }
+  function validSchedules(value) {
+    return value?.version === 1 && value.years && typeof value.years === "object" && !Array.isArray(value.years) && Number.isFinite(Date.parse(value.updatedAt));
+  }
+  function examDate(examId, settings, schedules, day = global.ReviewScheduler.beijingDate()) {
+    if (validDay(settings?.examDate)) return { mode:"manual", date:settings.examDate, endDate:settings.examDate, targetDate:settings.examDate };
+    const year = day.slice(0,4);
+    const record = validSchedules(schedules) ? schedules.years[year]?.[examId] : null;
+    const sessions = (Array.isArray(record?.sessions) ? record.sessions : []).filter(session => validDay(session.date) && validDay(session.endDate || session.date) && session.date.startsWith(`${year}-`) && (session.endDate || session.date) >= session.date && officialSource(examId,session.sourceUrl)).sort((a,b)=>a.date.localeCompare(b.date));
+    const session = sessions.find(item => (item.endDate || item.date) >= day) || sessions[sessions.length-1];
+    if (!session) return { mode:"official", date:"", year, status:record?.status || "unavailable" };
+    const endDate = session.endDate || session.date;
+    return { ...session, mode:"official", year, endDate, targetDate:day >= session.date && day <= endDate ? day : day > endDate ? endDate : session.date, status:record.status, checkedAt:session.verifiedAt || record.checkedAt };
+  }
+  const api = { validDay, recordedDay, summary, notes, noteUrl, countdown, officialSource, validSchedules, examDate };
   global.ReviewWorkspace = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof globalThis !== "undefined" ? globalThis : this);
+
+let officialExamDates = null;
+let officialExamDatesStatus = "loading";
+let officialExamDatesRequest = null;
+
+async function loadOfficialExamDates() {
+  if (officialExamDatesRequest) return officialExamDatesRequest;
+  const key = "exam-official-dates-v1";
+  try {
+    const saved = JSON.parse(localStorage.getItem(key));
+    if (ReviewWorkspace.validSchedules(saved) && (!officialExamDates || Date.parse(saved.updatedAt) >= Date.parse(officialExamDates.updatedAt))) officialExamDates = saved;
+  } catch { /* A missing or unavailable cache must not prevent studying. */ }
+  const urls = ["data/exam-dates.json", "https://raw.githubusercontent.com/AnnieTheMistress/CPA-Review/main/data/exam-dates.json"];
+  officialExamDatesRequest = Promise.all(urls.map(async url => {
+    try {
+      const options = { cache:"no-store" };
+      if (typeof AbortSignal !== "undefined" && AbortSignal.timeout) options.signal = AbortSignal.timeout(10000);
+      const response = await fetch(url, options);
+      if (!response.ok) return false;
+      const value = await response.json();
+      if (!ReviewWorkspace.validSchedules(value)) return false;
+      if (!officialExamDates || Date.parse(value.updatedAt) >= Date.parse(officialExamDates.updatedAt)) {
+        officialExamDates = value;
+        try { localStorage.setItem(key,JSON.stringify(value)); } catch { /* Read-only storage still permits official dates. */ }
+        officialExamDatesStatus = "ready";
+        if (app.view === "workspace" && !app.loading) renderWorkspace();
+      }
+      return true;
+    } catch { return false; }
+  })).then(results => {
+    officialExamDatesStatus = results.some(Boolean) ? "ready" : "offline";
+    if (app.view === "workspace" && !app.loading) renderWorkspace();
+  }).finally(() => { officialExamDatesRequest = null; });
+  return officialExamDatesRequest;
+}
+
+function workspaceDateDescription(date) {
+  if (!date.date) return officialExamDatesStatus === "loading" ? "正在读取官网考试安排…" : date.status === "unpublished" ? `${date.year}年考试日期尚未公布，可手动设置` : "暂时无法读取官网日期，可手动设置";
+  if (date.mode === "manual") return "手动设置 · 优先使用你的日期";
+  const checked = typeof date.checkedAt === "string" && Number.isFinite(Date.parse(date.checkedAt)) ? ReviewScheduler.beijingDate(date.checkedAt) : "";
+  return `${date.status === "stale" || officialExamDatesStatus === "offline" ? "上次核对的官网记录" : "官网公布"}${date.label ? ` · ${date.label}` : ""}${checked ? ` · 核对于${checked}` : ""}`;
+}
+
+function workspaceDateCard(examName) {
+  const date = ReviewWorkspace.examDate(app.examId,examState(),officialExamDates);
+  const countdown = ReviewWorkspace.countdown(date.targetDate);
+  const range = date.date && date.date !== date.endDate ? `${date.date} 至 ${date.endDate}` : date.date;
+  return `<section class="workspace-card countdown-card"><h2>考试倒计时</h2><span class="badge">${escapeHtml(examName)}</span><p>${countdown ? countdown.label : "考试安排"}</p><div class="countdown-value"><strong>${countdown?.days === 0 ? "今天" : countdown ? Math.abs(countdown.days) : "—"}</strong><span>${countdown?.days === 0 ? "" : countdown?.days < 0 ? "天前" : "天"}</span></div>${range ? `<p>${escapeHtml(range)}</p>` : ""}<p>${escapeHtml(workspaceDateDescription(date))}${date.sourceUrl ? `<br><a href="${escapeHtml(date.sourceUrl)}" target="_blank" rel="noopener noreferrer">查看官网公告 ↗</a>` : ""}</p><button class="secondary-button" data-workspace="date">${date.date ? "修改考试日期" : "设置考试日期"}</button>${date.mode === "manual" ? `<button class="link-button" data-workspace="clear-date">恢复官网日期</button>` : ""}</section>`;
+}
 
 function workspaceSubject() {
   const subjects = [...new Set(app.data.map(q => q.subject))].sort((a,b) => a.localeCompare(b,"zh-CN",{numeric:true}));
@@ -82,8 +148,6 @@ function renderWorkspace() {
   }).join("");
   const notes = ReviewWorkspace.notes(questions);
   const resume = app.byId.get(examState().workspace?.lastQuestionId);
-  const date = examState().examDate || "";
-  const countdown = ReviewWorkspace.countdown(date);
   document.querySelector("#main").innerHTML = `<section class="workspace">
     <header class="workspace-head"><h1>工作台</h1><p>${escapeHtml(examName)} · 选择章节，或从今天的复习开始。</p></header>
     <div class="workspace-subjects" aria-label="选择科目">${subjects.map(([subject,items]) => `<button class="secondary-button ${subject === selected ? "active" : ""}" data-workspace-subject="${escapeHtml(subject)}" aria-pressed="${subject === selected}">${escapeHtml(subject)} <span>${items.length}</span></button>`).join("")}</div>
@@ -95,7 +159,7 @@ function renderWorkspace() {
       </section>
       <section class="workspace-card workspace-notes"><div class="workspace-card-head"><h2>笔记</h2><button class="link-button" data-workspace="notes">查看全部 →</button></div><div class="workspace-note-list">${notes.length ? workspaceNoteRows(notes.slice(0,2)) : `<p class="workbench-empty">收录题目的知识点笔记会显示在这里。</p>`}</div></section>
     </div><aside class="workspace-side">
-      <section class="workspace-card countdown-card"><h2>考试倒计时</h2><span class="badge">${escapeHtml(examName)}</span><p>${countdown ? countdown.label : "设置你的考试日期"}</p><div class="countdown-value"><strong>${countdown?.days === 0 ? "今天" : countdown ? Math.abs(countdown.days) : "—"}</strong><span>${countdown?.days === 0 ? "" : countdown?.days < 0 ? "天前" : "天"}</span></div><p>${countdown ? escapeHtml(date) : "设置考试日期后显示剩余天数"}</p><button class="secondary-button" data-workspace="date">${date ? "修改考试日期" : "设置考试日期"}</button></section>
+      ${workspaceDateCard(examName)}
       <section class="workspace-card resume-card"><h2>继续上次</h2>${resume ? `<p>${escapeHtml(resume.subject)} · ${escapeHtml(resume.chapter)}</p><h3>${escapeHtml(resume.section || resume.knowledge || "继续复习")}</h3><p>上次停在第 ${app.data.indexOf(resume)+1} 题</p><button class="primary-button" data-workspace="resume">继续刷题</button>` : `<p>从第一组错题开始，随时回来继续。</p><button class="primary-button" data-workspace="all" ${app.data.length ? "" : "disabled"}>开始练习</button>`}</section>
       ${stats.uncertain.length ? `<section class="workspace-card"><h2>答案存疑</h2><p>${stats.uncertain.length} 道题可作答、查看原解析，暂不判分。</p><button class="secondary-button" data-workspace="uncertain">查看存疑题</button></section>` : ""}
     </aside></div></section>`;
@@ -149,7 +213,10 @@ if (typeof document !== "undefined") {
     if (action === "catalog") { app.catalog = {subject:workspaceSubject() || null,chapter:null,section:null,knowledge:null}; app.view="catalog";render(); }
     if (action === "notes") { app.view="notes";render(); }
     if (action === "date") {
-      document.querySelector("#exam-date").value = examState().examDate || "";
+      document.querySelector("#exam-date").value = ReviewWorkspace.examDate(app.examId,examState(),officialExamDates).date || "";
+      const official = ReviewWorkspace.examDate(app.examId,{},officialExamDates);
+      const hint = document.querySelector("#official-exam-date");
+      if (hint) hint.textContent = official.date ? `官网日期：${official.date}${official.endDate !== official.date ? ` 至 ${official.endDate}` : ""}。保存个人日期后优先使用你的设置。` : workspaceDateDescription(official);
       document.querySelector("#countdown-error").textContent = "";
       document.querySelector("#countdown-dialog").showModal();
     }
