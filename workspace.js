@@ -157,7 +157,7 @@ function renderWorkspace() {
         <div class="workspace-card workspace-stat"><h3>今日新增错题</h3><div class="workspace-stat-value">${stats.added.length}<small>道</small></div><p>回看今天记录的错题</p><button class="secondary-button" data-workspace="new" ${stats.added.length ? "" : "disabled"}>查看新增</button></div>
         <div class="workspace-card workspace-stat"><h3>今日待复习</h3><div class="workspace-stat-value">${stats.due.length}<small>道</small></div><p>到期题与尚未练习的可判分题</p><button class="primary-button" data-workspace="daily" ${stats.due.length ? "" : "disabled"}>开始复习</button></div>
       </section>
-      <section class="workspace-card workspace-notes"><div class="workspace-card-head"><h2>笔记</h2><button class="link-button" data-workspace="notes">查看全部 →</button></div><div class="workspace-note-list">${notes.length ? workspaceNoteRows(notes.slice(0,2)) : `<p class="workbench-empty">收录题目的知识点笔记会显示在这里。</p>`}</div></section>
+      <section class="workspace-card workspace-notes"><div class="workspace-card-head"><h2>笔记</h2><button class="link-button" data-workspace="notes">我的笔记与知识点 →</button></div><div class="notes-toolbar"><button class="secondary-button" data-notes-action="new">新建笔记</button><button class="secondary-button" data-notes-action="import">导入文件</button></div><div class="workspace-note-list">${notes.length ? workspaceNoteRows(notes.slice(0,2)) : `<p class="workbench-empty">收录题目的知识点笔记会显示在这里。</p>`}</div></section>
     </div><aside class="workspace-side">
       ${workspaceDateCard(examName)}
       <section class="workspace-card resume-card"><h2>继续上次</h2>${resume ? `<p>${escapeHtml(resume.subject)} · ${escapeHtml(resume.chapter)}</p><h3>${escapeHtml(resume.section || resume.knowledge || "继续复习")}</h3><p>上次停在第 ${app.data.indexOf(resume)+1} 题</p><button class="primary-button" data-workspace="resume">继续刷题</button>` : `<p>从第一组错题开始，随时回来继续。</p><button class="primary-button" data-workspace="all" ${app.data.length ? "" : "disabled"}>开始练习</button>`}</section>
@@ -166,6 +166,7 @@ function renderWorkspace() {
 }
 
 function renderWorkspaceNotes() {
+  if (typeof renderPersonalNotes === "function") return renderPersonalNotes();
   const notes = ReviewWorkspace.notes(workspaceQuestions());
   document.querySelector("#main").innerHTML = `<section class="workspace"><header class="workspace-head"><h1>知识点笔记</h1><p>${escapeHtml(workspaceSubject())} · ${notes.length} 篇笔记</p><button class="secondary-button" data-view="workspace">返回工作台</button></header><section class="workspace-card workspace-note-list">${workspaceNoteRows(notes) || `<p class="workbench-empty">暂无知识点笔记。</p>`}</section></section>`;
 }
