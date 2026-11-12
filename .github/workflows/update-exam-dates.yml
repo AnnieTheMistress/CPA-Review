@@ -1,6 +1,11 @@
 name: Update official exam dates
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/update_exam_dates.py'
+      - '.github/workflows/update-exam-dates.yml'
   schedule:
     - cron: '17 1,13 * * *'
   workflow_dispatch:
