@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#203229">
-  <title>CPA 错题复习</title>
+  <meta name="theme-color" content="#FCFAFE">
+  <title>错题复习 · 学习工作台</title>
   <link rel="stylesheet" href="styles.css?v=20260828-4">
+  <link rel="stylesheet" href="workspace.css?v=20261112-1">
 </head>
 <body>
   <div id="app" class="app-shell">
@@ -20,12 +21,15 @@
       </div>
     </header>
 
+    <aside id="exam-sidebar" class="exam-sidebar" aria-label="切换考试"></aside>
+
     <main id="main" class="main" aria-live="polite">
       <div class="loading">正在载入题库…</div>
     </main>
 
     <nav class="bottom-nav" aria-label="主导航">
-      <button data-view="practice" class="active"><span>✎</span>刷题</button>
+      <button data-view="workspace" class="active"><span>⌂</span>工作台</button>
+      <button data-view="practice"><span>✎</span>刷题</button>
       <button data-view="catalog"><span>☷</span>目录</button>
       <button data-view="favorites"><span>☆</span>收藏</button>
       <button data-view="progress"><span>◫</span>进度</button>
@@ -47,8 +51,18 @@
     <div id="filter-content"></div>
   </dialog>
 
+  <dialog id="countdown-dialog" class="sheet" aria-labelledby="countdown-title">
+    <form id="countdown-form">
+      <div class="sheet-head"><h2 id="countdown-title">设置考试日期</h2><button type="button" class="icon-button" data-workspace="cancel-date" aria-label="关闭">×</button></div>
+      <div class="filter-group"><label for="exam-date">当前考试的日期</label><input class="text-input" id="exam-date" type="date" required></div>
+      <p id="countdown-error" role="alert"></p>
+      <div class="filter-actions"><button type="button" class="secondary-button" data-workspace="clear-date">清除日期</button><button type="submit" class="primary-button">保存日期</button></div>
+    </form>
+  </dialog>
+
   <input id="import-file" type="file" accept="application/json" hidden>
   <script src="scheduler.js" defer></script>
-  <script src="app.js?v=20260828-4" defer></script>
+  <script src="workspace.js?v=20261112-1" defer></script>
+  <script src="app.js?v=20261112-1" defer></script>
 </body>
 </html>

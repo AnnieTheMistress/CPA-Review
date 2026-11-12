@@ -6,7 +6,9 @@ const app = {
   exams: [],
   examId: "cpa",
   byId: new Map(),
-  view: "practice",
+  view: "workspace",
+  loading: false,
+  loadSequence: 0,
   queue: [],
   cursor: 0,
   selected: new Set(),
@@ -99,6 +101,7 @@ function migrateAliases(aliases) {
     state.session.currentId = resolveAlias(state.session.currentId, aliases);
     state.session.queue = (state.session.queue || []).map(id => resolveAlias(id, aliases));
   }
+  if (state.workspace?.lastQuestionId) state.workspace.lastQuestionId = resolveAlias(state.workspace.lastQuestionId, aliases);
   saveState();
 }
 
@@ -383,8 +386,11 @@ function renderEmpty(message, wrapper = true) {
 }
 
 function render() {
-  document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === app.view));
-  if (app.view === "practice") renderPractice();
+  renderWorkspaceSidebar();
+  document.querySelectorAll(".bottom-nav button").forEach(button => button.classList.toggle("active", button.dataset.view === app.view || (app.view === "notes" && button.dataset.view === "workspace")));
+  if (app.view === "workspace") renderWorkspace();
+  if (app.view === "notes") renderWorkspaceNotes();
+  if (app.view === "practice") { renderPractice(); rememberWorkspaceQuestion(); }
   if (app.view === "catalog") renderCatalog();
   if (app.view === "favorites") renderFavorites();
   if (app.view === "progress") renderProgress();
@@ -476,7 +482,7 @@ document.addEventListener("click", event => {
   if (action === "favorite") { const q = currentQuestion(); updateProgress(q.id, { favorite: !progressFor(q.id).favorite }); render(); }
   if (action === "previous") navigateQuestion(-1);
   if (action === "next") navigateQuestion(1);
-  if (action === "home") { app.view = "practice"; render(); }
+  if (action === "home") { app.view = "workspace"; render(); }
   if (action === "search") { document.querySelector("#search-dialog").showModal(); document.querySelector("#search-input").focus(); }
   if (action === "filters") { renderFilters(); document.querySelector("#filter-dialog").showModal(); }
   if (action === "clear-filters") { app.filters = { subject: "", chapter: "", type: "", status: "" }; renderFilters(); }
@@ -516,16 +522,23 @@ function renderExamSelector() {
 async function loadExam(examId) {
   const exam = app.exams.find(item => item.id === examId) || app.exams[0];
   if (!exam) throw new Error("没有可用的考试题库");
-  app.examId = exam.id;
-  app.filters = { subject: "", chapter: "", type: "", status: "" };
-  app.catalog = { subject: null, chapter: null, section: null, knowledge: null };
+  const sequence = ++app.loadSequence;
   const [payload, aliases] = await Promise.all([
     fetch(exam.questions, { cache: "no-store" }).then(response => { if (!response.ok) throw new Error(`${exam.name} 题库载入失败`); return response.json(); }),
     fetch(exam.aliases, { cache: "no-store" }).then(response => response.ok ? response.json() : {}).catch(() => ({})),
   ]);
+  if (sequence !== app.loadSequence) return;
+  if (!Array.isArray(payload.questions)) throw new Error("题库格式不正确，请重试。");
+  app.examId = exam.id;
+  app.filters = { subject: "", chapter: "", type: "", status: "" };
+  app.catalog = { subject: null, chapter: null, section: null, knowledge: null };
+  app.view = "workspace";
+  app.loading = false;
   app.data = payload.questions;
   app.byId = new Map(app.data.map(item => [item.id, item]));
   migrateAliases(aliases);
+  const workspace = examState().workspace ||= {};
+  if (!workspace.lastQuestionId && examState().session?.currentId) workspace.lastQuestionId = examState().session.currentId;
   restoreSession();
   recomputeKnowledgeState();
   renderExamSelector();
@@ -534,14 +547,23 @@ async function loadExam(examId) {
   render();
 }
 
-async function switchExam(examId) {
-  if (examId === app.examId) return;
+async function switchExam(examId, force = false) {
+  if (app.loading || (examId === app.examId && !force)) return;
   saveSession();
+  app.loading = true;
+  renderWorkspaceSidebar();
+  document.querySelector("#exam-select").disabled = true;
   document.querySelector("#main").innerHTML = `<div class="loading">正在载入题库…</div>`;
   try {
     await loadExam(examId);
   } catch (error) {
-    renderEmpty(error.message);
+    app.loading = false;
+    app.failedExamId = examId;
+    renderExamSelector();
+    renderWorkspaceSidebar();
+    document.querySelector("#main").innerHTML = `<div class="empty"><div><p>${escapeHtml(error.message)}</p><button class="secondary-button" data-workspace="reload-exam">重新载入</button></div></div>`;
+  } finally {
+    document.querySelector("#exam-select").disabled = false;
   }
 }
 
