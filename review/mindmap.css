@@ -1,0 +1,39 @@
+/* Scoped to the generated map; the original pre.mindmap remains available. */
+.mm-widget { margin: 1.2em 0; color: #302644; }
+.mm-help { margin: 0 0 .65em; color: #665a79; font-size: .88rem; line-height: 1.6; }
+.mm-viewport { overflow: auto; overscroll-behavior-x: contain; border: 1px solid #e3d9f0; border-radius: 18px; background: #fbf9fe; }
+.mm-viewport:focus-visible, .mm-widget a:focus-visible, .mm-toggle:focus-visible { outline: 3px solid #8460bb; outline-offset: 3px; }
+.mm-canvas { position: relative; display: flex; align-items: center; width: max-content; min-width: 100%; padding: 32px; }
+.mm-lines { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.mm-lines path { fill: none; stroke-width: 2; stroke-linecap: round; }
+.mm-widget ul { list-style: none; margin: 0; padding: 0; }
+.mm-side, .mm-children { display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+.mm-side { flex: 1 0 auto; }
+.mm-side > .mm-item { --branch: #9771be; }
+.mm-side > .mm-item:nth-child(3n + 2) { --branch: #5e9c9a; }
+.mm-side > .mm-item:nth-child(3n) { --branch: #d59068; }
+.mm-item { display: flex; align-items: center; position: relative; gap: 36px; }
+.mm-left .mm-item { flex-direction: row-reverse; }
+.mm-right .mm-item { flex-direction: row; }
+.mm-side > .mm-item::before, .mm-children > .mm-item::before { content: ''; position: absolute; top: 50%; width: 18px; border-top: 2px solid var(--branch); }
+.mm-right .mm-item::before { left: -18px; }
+.mm-left .mm-item::before { right: -18px; }
+.mm-children { position: relative; flex: 0 0 auto; }
+.mm-children[hidden] { display: none; }
+.mm-children::before { content: ''; position: absolute; top: 50%; width: 18px; border-top: 2px solid var(--branch); }
+.mm-right .mm-children::before { left: -18px; }
+.mm-left .mm-children::before { right: -18px; }
+.mm-row { display: flex; align-items: center; gap: 5px; position: relative; z-index: 1; flex: 0 0 auto; }
+.mm-left .mm-row { flex-direction: row-reverse; }
+.mm-label { display: block; max-width: 260px; padding: 9px 13px; border: 1px solid color-mix(in srgb, var(--branch, #8965ae) 55%, white); border-radius: 12px; background: #fff; color: #382c49; font-size: .88rem; line-height: 1.5; overflow-wrap: anywhere; box-shadow: 0 3px 10px #4c36700d; }
+.mm-widget a.mm-label { color: #4e3470; text-decoration: none; }
+.mm-widget a.mm-label:hover { background: #f3edf9; text-decoration: underline; }
+.mm-center { flex: 0 0 auto; max-width: 245px; margin: 0 18px; padding: 17px 20px; border-color: #704b9d; border-radius: 18px; background: #704b9d; color: #fff; text-align: center; font-weight: 700; box-shadow: 0 6px 18px #704b9d33; }
+.mm-toggle { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; padding: 0; border: 1px solid var(--branch); border-radius: 50%; background: #fff; color: #523a6c; cursor: pointer; font: 700 18px/1 system-ui, sans-serif; flex: 0 0 auto; }
+.mm-toggle:hover { background: #f0e9f7; }
+@media (max-width: 600px) {
+  .mm-canvas { padding: 24px 20px; }
+  .mm-label { max-width: 210px; }
+  .mm-center { max-width: 200px; }
+}
+@media (prefers-reduced-motion: reduce) { .mm-viewport { scroll-behavior: auto; } }

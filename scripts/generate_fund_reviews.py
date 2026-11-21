@@ -67,6 +67,8 @@ def render(markdown):
         heading = re.match(r'^(#{1,6})\s+(.+)$', line)
         if heading:
             level, text = len(heading.group(1)), heading.group(2)
+            if level == 2:
+                text = text.replace('文字思维导图', '思维导图')
             ident = f'section-{len(headings) + 1}'
             headings.append((level, text, ident))
             out.append(f'<h{level} id="{ident}">{inline(text)}</h{level}>')
@@ -121,7 +123,7 @@ def page(source):
     title = headings[0][1]
     toc = ''.join(f'<a href="#{ident}">{inline(text)}</a>' for level, text, ident in headings if level == 2)
     return f'''<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f5fa"><title>{html.escape(title)}</title><style>{STYLE}</style></head>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f7f5fa"><title>{html.escape(title)}</title><style>{STYLE}</style><link rel="stylesheet" href="quiz.css?v=20261121-1"><link rel="stylesheet" href="mindmap.css?v=20261121-1"><script src="quiz.js?v=20261121-1" defer></script><script src="mindmap.js?v=20261121-1" defer></script></head>
 <body><header><div class="top"><a href="../index.html">← 返回错题库</a><span>基金从业 · 错题复习资料</span></div></header><main><nav class="toc" aria-label="页面目录"><strong>目录</strong>{toc}</nav><article>{body}</article></main></body></html>'''
 
 
