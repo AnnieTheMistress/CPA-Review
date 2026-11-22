@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "updatedAt": "2026-11-21T20:05:32.281834+00:00",
+  "updatedAt": "2026-11-22T07:58:55.029784+00:00",
   "years": {
     "2026": {
       "cpa": {
-        "status": "published",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
+        "status": "stale",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
         "checkedAt": "2026-11-21T20:05:32.281834+00:00",
         "sessions": [
           {
@@ -17,12 +17,13 @@
             "sourceTitle": "关于发布2026年注册会计师全国统一考试报名时间和考试时间的公告",
             "verifiedAt": "2026-11-21T20:05:32.281834+00:00"
           }
-        ]
+        ],
+        "error": "List retrieval failed: URLError"
       },
       "intermediate": {
         "status": "published",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
-        "checkedAt": "2026-11-21T20:05:32.281834+00:00",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
+        "checkedAt": "2026-11-22T07:58:55.029784+00:00",
         "sessions": [
           {
             "id": "intermediate-2026-09-05",
@@ -31,14 +32,14 @@
             "label": "中级会计",
             "sourceUrl": "https://kjs.mof.gov.cn/gongzuotongzhi/202511/t20251127_3977584.htm",
             "sourceTitle": "关于2026年度全国会计专业技术资格考试考务日程安排及有关事项的通知",
-            "verifiedAt": "2026-11-21T20:05:32.281834+00:00"
+            "verifiedAt": "2026-11-22T07:58:55.029784+00:00"
           }
         ]
       },
       "fund": {
         "status": "stale",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
-        "checkedAt": "2026-11-21T20:05:32.281834+00:00",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
+        "checkedAt": "2026-11-22T07:58:55.029784+00:00",
         "sessions": [
           {
             "id": "fund-2026-05-23",
@@ -54,33 +55,33 @@
             "date": "2026-11-28",
             "endDate": "2026-11-28",
             "label": "全国统一考试",
-            "sourceUrl": "https://www.amac.org.cn/fwdt/wyb/rygl/cyks/cykstz/202512/t20251229_27473.html",
-            "sourceTitle": "中国证券投资基金业协会关于发布2026年度考试计划的公告",
-            "verifiedAt": "2026-11-21T20:05:32.281834+00:00"
+            "sourceUrl": "https://www.amac.org.cn/fwdt/wyb/rygl/cyks/cykstz/202611/t20261103_28194.html",
+            "sourceTitle": "2026年11月基金从业资格考试公告",
+            "verifiedAt": "2026-11-22T07:58:55.029784+00:00"
           }
         ],
-        "error": "List retrieval failed: ValueError; Announcement retrieval/parse failed: ValueError"
+        "error": "Announcement retrieval/parse failed: URLError"
       }
     },
     "2027": {
       "cpa": {
-        "status": "unpublished",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
+        "status": "stale",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
         "checkedAt": null,
-        "sessions": []
+        "sessions": [],
+        "error": "List retrieval failed: URLError"
       },
       "intermediate": {
         "status": "unpublished",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
         "checkedAt": null,
         "sessions": []
       },
       "fund": {
-        "status": "stale",
-        "attemptedAt": "2026-11-21T20:05:32.281834+00:00",
+        "status": "unpublished",
+        "attemptedAt": "2026-11-22T07:58:55.029784+00:00",
         "checkedAt": null,
-        "sessions": [],
-        "error": "List retrieval failed: ValueError"
+        "sessions": []
       }
     }
   }
