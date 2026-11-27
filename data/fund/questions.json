@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-27",
-  "count": 478,
+  "generatedAt": "2026-11-28",
+  "count": 488,
   "subjects": {
-    "科目一": 428,
+    "科目一": 438,
     "科目三": 50
   },
-  "interactiveCount": 399,
+  "interactiveCount": 407,
   "questions": [
     {
       "id": "b13ad359f1bf3378272c",
@@ -17010,6 +17010,502 @@
       "uncertain": false,
       "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
       "knowledgeChapterCode": "06"
+    },
+    {
+      "id": "8d7903031973132cbb8c",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 44,
+      "title": "电子信息数据即时保存与异地备份",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "基金管理人应建立电子信息数据的（　）和备份制度，重要数据应当（　）并且长期保存。\nA. 定期保存；异地备份\nB. 定期保存；本地备份\nC. 即时保存；异地备份\nD. 即时保存；本地备份",
+      "options": [
+        {
+          "key": "A",
+          "text": "定期保存；异地备份"
+        },
+        {
+          "key": "B",
+          "text": "定期保存；本地备份"
+        },
+        {
+          "key": "C",
+          "text": "即时保存；异地备份"
+        },
+        {
+          "key": "D",
+          "text": "即时保存；本地备份"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "C",
+      "correctKeys": [
+        "C"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《证券投资基金管理公司内部控制指导意见》第三十五条明确建立电子信息数据的即时保存和备份制度，重要数据应异地备份并长期保存；C与条文对应，不能以定期保存替代即时保存。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《证券投资基金管理公司内部控制指导意见》第三十五条明确建立电子信息数据的即时保存和备份制度，重要数据应异地备份并长期保存；C与条文对应，不能以定期保存替代即时保存。\n\n来源原解析：对于基金管理人电子信息数据，重要的是即时保存以防止数据丢失，同时为防意外情况，重要数据要异地备份，这样即便本地出现问题，数据也有保障。所以答案是C。\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第1题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "370e44eda8fad5256b15",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 45,
+      "title": "内部控制的定义",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "基金管理人的（　）是指基金管理人为防范和化解风险，保证经营运作符合基金管理人的发展规划，在充分考虑内外部环境的基础上，通过建立组织机制、运用管理方法、实施操作程序与控制措施而形成的系统。\nA. 内部控制\nB. 外部控制\nC. 直接控制\nD. 间接控制",
+      "options": [
+        {
+          "key": "A",
+          "text": "内部控制"
+        },
+        {
+          "key": "B",
+          "text": "外部控制"
+        },
+        {
+          "key": "C",
+          "text": "直接控制"
+        },
+        {
+          "key": "D",
+          "text": "间接控制"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第二条原文即题干定义：通过组织机制、管理方法、操作程序与控制措施形成的防范和化解风险的系统，答案A。内部控制包含机制和执行过程，不只是书面制度。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第二条原文即题干定义：通过组织机制、管理方法、操作程序与控制措施形成的防范和化解风险的系统，答案A。内部控制包含机制和执行过程，不只是书面制度。\n\n来源原解析：题干描述的是基金管理人针对自身经营运作防范风险，通过一系列内部手段建立的系统，这明显是内部控制的概念。答案：A\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第5题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "dcb394c558d221f8cc46",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 46,
+      "title": "控制环境的构成",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "控制环境构成内部控制的基础，包括（　）。\nⅠ、经营理念和内控文化\nⅡ、治理结构\nⅢ、组织结构\nⅣ、员工道德素质\nA. Ⅰ\nB. Ⅰ、Ⅱ\nC. Ⅰ、Ⅱ、Ⅲ\nD. Ⅰ、Ⅱ、Ⅲ、Ⅳ",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ⅰ"
+        },
+        {
+          "key": "B",
+          "text": "Ⅰ、Ⅱ"
+        },
+        {
+          "key": "C",
+          "text": "Ⅰ、Ⅱ、Ⅲ"
+        },
+        {
+          "key": "D",
+          "text": "Ⅰ、Ⅱ、Ⅲ、Ⅳ"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "D",
+      "correctKeys": [
+        "D"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第九条明确经营理念和内控文化、公司治理结构、组织结构、员工道德素质四类内容，Ⅰ至Ⅳ均应选，来源D正确。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第九条明确经营理念和内控文化、公司治理结构、组织结构、员工道德素质四类内容，Ⅰ至Ⅳ均应选，来源D正确。\n\n来源原解析：控制环境作为内部控制基础，涵盖经营理念与内控文化、治理结构、组织结构以及员工道德素质等多方面内容。经营理念和内控文化影响整体控制氛围，治理结构从公司层面提供制度框架，组织结构明确职责分工，员工道德素质是有效执行控制的关键。所以这四个方面都属于控制环境。答案选D。\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第14题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "f3744e029ee03eff95bd",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 47,
+      "title": "基金交易业务控制",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "基金管理人的基金交易业务控制包含（　）。\nⅠ、实行集中交易制度\nⅡ、建立交易监测系统、预警系统和交易反馈系统\nⅢ、投资指令确认合法、合规与完整后方可执行\nⅣ、建立科学的交易绩效评价体系\nA. Ⅰ\nB. Ⅰ、Ⅱ\nC. Ⅰ、Ⅱ、Ⅲ\nD. Ⅰ、Ⅱ、Ⅲ、Ⅳ",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ⅰ"
+        },
+        {
+          "key": "B",
+          "text": "Ⅰ、Ⅱ"
+        },
+        {
+          "key": "C",
+          "text": "Ⅰ、Ⅱ、Ⅲ"
+        },
+        {
+          "key": "D",
+          "text": "Ⅰ、Ⅱ、Ⅲ、Ⅳ"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "D",
+      "correctKeys": [
+        "D"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第二十五条第（一）（二）（三）（六）项分别对应集中交易、监测预警反馈、指令审核以及交易绩效评价，四项均属于交易业务控制，答案D。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第二十五条第（一）（二）（三）（六）项分别对应集中交易、监测预警反馈、指令审核以及交易绩效评价，四项均属于交易业务控制，答案D。\n\n来源原解析：基金交易业务控制的内容包括实行集中交易制度；建立交易监测、预警和反馈系统；对投资指令进行合法、合规与完整性确认后执行；建立科学的交易绩效评价体系等。这四点均属于基金管理人基金交易业务控制范畴。答案：D。\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第16题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "d02186beceb0267c9242",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 48,
+      "title": "金融机构内控指导原则的发布主体",
+      "type": "客观",
+      "reasonType": "记忆遗漏",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "1997年5月，（　）了《加强金融机构内部控制的指导原则》，奠定了金融机构内部控制制度建设的基础。\nA. 中国证券业协会\nB. 中国人民银行\nC. 中国证监会\nD. 金融监管局",
+      "options": [
+        {
+          "key": "A",
+          "text": "中国证券业协会"
+        },
+        {
+          "key": "B",
+          "text": "中国人民银行"
+        },
+        {
+          "key": "C",
+          "text": "中国证监会"
+        },
+        {
+          "key": "D",
+          "text": "金融监管局"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "B",
+      "correctKeys": [
+        "B"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：来源B（中国人民银行）与正保会计网校历史文章所述“1997年5月，中国人民银行发布”一致。本批该发布日期与主体采用二手历史资料辅助核对，未将其冒称人民银行原始文件。题干“（ ）了”漏写“发布”，保留原文并说明，不据此猜改选项。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "来源B（中国人民银行）与正保会计网校历史文章所述“1997年5月，中国人民银行发布”一致。本批该发布日期与主体采用二手历史资料辅助核对，未将其冒称人民银行原始文件。题干“（ ）了”漏写“发布”，保留原文并说明，不据此猜改选项。\n\n来源原解析：1997年5月是中国人民银行发布了《加强金融机构内部控制的指导原则》 ，旨在加强金融机构内部控制，防范金融风险。答案选B。\n\n[核验依据1](https://www.chinaacc.com/new/287/297/2006/1/ad475718473517160022496.htm)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第25题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "051be442e80b4e309144",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 49,
+      "title": "督察长的内控监督权限",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "基金管理公司督察长的权利和职责不包括（　）。\nA. 人事权利\nB. 列席公司相关会议\nC. 调阅公司相关档案\nD. 就内部控制制度的执行情况独立地履行检查、评价、报告、建议职能",
+      "options": [
+        {
+          "key": "A",
+          "text": "人事权利"
+        },
+        {
+          "key": "B",
+          "text": "列席公司相关会议"
+        },
+        {
+          "key": "C",
+          "text": "调阅公司相关档案"
+        },
+        {
+          "key": "D",
+          "text": "就内部控制制度的执行情况独立地履行检查、评价、报告、建议职能"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "A",
+      "correctKeys": [
+        "A"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第四十六条列示列席相关会议、调阅相关档案，以及独立检查、评价、报告、建议职能，与B、C、D对应，A不在该题列举的监督权限内。此结论限于本题考点，不扩展为督察长在任何合规人员事项上都没有建议或评价职责。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第四十六条列示列席相关会议、调阅相关档案，以及独立检查、评价、报告、建议职能，与B、C、D对应，A不在该题列举的监督权限内。此结论限于本题考点，不扩展为督察长在任何合规人员事项上都没有建议或评价职责。\n\n来源原解析：督察长主要负责监督检查，侧重对公司制度执行等监督方面工作，B、C、D 选项都符合其职责范畴，而人事权利不属于督察长的权利和职责。答案：A。\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第29题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "bd0b785e3ae344732b14",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 50,
+      "title": "内部控制指导意见的发布时点",
+      "type": "客观",
+      "reasonType": "记忆遗漏",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "（　）《证券投资基金管理公司内部控制指导意见》正式出台。\nA. 2002年2月\nB. 2001年9月\nC. 1999年12月\nD. 1999年3月",
+      "options": [
+        {
+          "key": "A",
+          "text": "2002年2月"
+        },
+        {
+          "key": "B",
+          "text": "2001年9月"
+        },
+        {
+          "key": "C",
+          "text": "1999年12月"
+        },
+        {
+          "key": "D",
+          "text": "1999年3月"
+        }
+      ],
+      "myAnswer": "C",
+      "correctAnswer": "A",
+      "correctKeys": [],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：疑点：来源参考A“2002年2月”与协会官网公布的文件发文日期2002-12-20及正文标题下“2002年12月20日证监基金字〔2002〕93号”冲突；第五十三条规定自2003年1月1日起施行。现有四个选项均无2002年12月，故保留来源A和原解析以追溯，允许作答但不判分，不擅自改造选项。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "存疑：来源参考A“2002年2月”与协会官网公布的文件发文日期2002-12-20及正文标题下“2002年12月20日证监基金字〔2002〕93号”冲突；第五十三条规定自2003年1月1日起施行。现有四个选项均无2002年12月，故保留来源A和原解析以追溯，允许作答但不判分，不擅自改造选项。\n\n来源原解析：《证券投资基金管理公司内部控制指导意见》是2002年2月正式出台的，这属于基金行业发展历程中的重要法规出台时间的记忆点。答案：A\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第34题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": false,
+      "uncertain": true,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "41f54e77ebe6635f1d2f",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 51,
+      "title": "内部控制与内部控制制度的区别",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "关于基金管理人的内部控制和内部控制制度，下列说法错误的是（　）。\nA. 制定内部控制制度应当遵循四个原则，即合法合规性原则、全面性原则、审慎性原则和适时性原则\nB. 内部控制制度的三个层次，分别是内部控制大纲、基本管理制度、部门业务规章\nC. 有效的内部控制能使每一个环节都在既定的轨道上发挥最佳的效用\nD. 内部控制就是内部控制制度",
+      "options": [
+        {
+          "key": "A",
+          "text": "制定内部控制制度应当遵循四个原则，即合法合规性原则、全面性原则、审慎性原则和适时性原则"
+        },
+        {
+          "key": "B",
+          "text": "内部控制制度的三个层次，分别是内部控制大纲、基本管理制度、部门业务规章"
+        },
+        {
+          "key": "C",
+          "text": "有效的内部控制能使每一个环节都在既定的轨道上发挥最佳的效用"
+        },
+        {
+          "key": "D",
+          "text": "内部控制就是内部控制制度"
+        }
+      ],
+      "myAnswer": "A",
+      "correctAnswer": "D",
+      "correctKeys": [
+        "D"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第二条将内部控制定义为系统，第三条列示制度构成，第七条规定制订制度的四项原则；A、B与该体系一致，D把内控系统与书面制度等同，错误项为D。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第二条将内部控制定义为系统，第三条列示制度构成，第七条规定制订制度的四项原则；A、B与该体系一致，D把内控系统与书面制度等同，错误项为D。\n\n来源原解析：内部控制是一种机制和过程，包含一系列相互关联和制约的方法、措施与程序等，而内部控制制度只是内部控制的一部分，是对相关规则、流程等的书面规定，二者不能简单等同。所以D选项说法错误。答案：D\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第35题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "ff43c9a2dc6b832e7ccc",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 52,
+      "title": "内部控制制度层次与合规手册边界",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "基金管理人的内部控制制度包括（　）。\nⅠ、内部控制大纲\nⅡ、基本管理制度\nⅢ、部门业务规章\nⅣ、合规手册\nA. Ⅰ、Ⅱ、Ⅲ\nB. Ⅰ、Ⅱ\nC. Ⅱ、Ⅲ、Ⅳ\nD. Ⅰ、Ⅱ、Ⅲ、Ⅳ",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ⅰ、Ⅱ、Ⅲ"
+        },
+        {
+          "key": "B",
+          "text": "Ⅰ、Ⅱ"
+        },
+        {
+          "key": "C",
+          "text": "Ⅱ、Ⅲ、Ⅳ"
+        },
+        {
+          "key": "D",
+          "text": "Ⅰ、Ⅱ、Ⅲ、Ⅳ"
+        }
+      ],
+      "myAnswer": "D",
+      "correctAnswer": "A",
+      "correctKeys": [],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "❓ 存疑：疑点：来源A按常见教材的三个制度层次（内控大纲、基本管理制度、部门业务规章）理解有依据；但《指导意见》第三条表述为上述类别“等部分组成”，不能据此推出原解析“合规手册不属于内部控制制度范畴”的绝对判断。题干只问“包括”而未限定制度层次，合规手册也可能承载内控要求，Ⅳ是否排除缺乏唯一性；保留A、原解析并标疑点，可选择但不判分。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "存疑：来源A按常见教材的三个制度层次（内控大纲、基本管理制度、部门业务规章）理解有依据；但《指导意见》第三条表述为上述类别“等部分组成”，不能据此推出原解析“合规手册不属于内部控制制度范畴”的绝对判断。题干只问“包括”而未限定制度层次，合规手册也可能承载内控要求，Ⅳ是否排除缺乏唯一性；保留A、原解析并标存疑，可选择但不判分。\n\n来源原解析：基金管理人内部控制制度由内部控制大纲、基本管理制度、部门业务规章、业务操作手册等组成，合规手册不属于内部控制制度范畴。答案：A\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第36题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": false,
+      "uncertain": true,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
+    },
+    {
+      "id": "758f05920aabfce43b25",
+      "subject": "科目一",
+      "chapterCode": "06",
+      "chapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledge": "内部控制",
+      "entryNo": 53,
+      "title": "内部控制的相互制约原则",
+      "type": "客观",
+      "reasonType": "概念不清",
+      "mastery": "未掌握",
+      "nextReview": "2026-11-29",
+      "reviewCount": 0,
+      "question": "关于基金管理人根据相互制约原则实施内部控制措施，说法错误的是（　）。\nA. 从横向关系来看，需由相互独立的部门或人员协调运作、相互制约\nB. 相互牵制必须考虑横向控制和纵向控制两方面\nC. 从纵向关系来看，下级受上级监督，上级具有决定权，不受下级牵制\nD. 经过横向关系和纵向关系的核查和制约，才能使发生的错弊减少到较低程度",
+      "options": [
+        {
+          "key": "A",
+          "text": "从横向关系来看，需由相互独立的部门或人员协调运作、相互制约"
+        },
+        {
+          "key": "B",
+          "text": "相互牵制必须考虑横向控制和纵向控制两方面"
+        },
+        {
+          "key": "C",
+          "text": "从纵向关系来看，下级受上级监督，上级具有决定权，不受下级牵制"
+        },
+        {
+          "key": "D",
+          "text": "经过横向关系和纵向关系的核查和制约，才能使发生的错弊减少到较低程度"
+        }
+      ],
+      "myAnswer": "B",
+      "correctAnswer": "C",
+      "correctKeys": [
+        "C"
+      ],
+      "answerMode": "single",
+      "reason": "（未提供）",
+      "check": "🔍 AI核对：《指导意见》第六条第（四）项及第十二条要求权责分明、相互制衡。题目C把纵向关系理解成上级不受任何下级牵制，不符合相互制约的考点；保留来源C。具体的监督制衡方式仍应依据实际授权制度，不把教材概括扩张为任意下级可否决上级。 用户未提供错因；本段为AI分析，非用户自述。",
+      "analysis": "《指导意见》第六条第（四）项及第十二条要求权责分明、相互制衡。题目C把纵向关系理解成上级不受任何下级牵制，不符合相互制约的考点；保留来源C。具体的监督制衡方式仍应依据实际授权制度，不把教材概括扩张为任意下级可否决上级。\n\n来源原解析：相互制约原则中，纵向关系上，上级不仅有监督下级的权力，同时也受下级的牵制，不能为所欲为。选项C说上级不受下级牵制错误。答案：C\n\n[核验依据1](https://fg.amac.org.cn/governmentrules_3854/zcgz_gfxwj/gfxwj_gmjj/gmjj_gsjg/201912/t20191222_24707.html)",
+      "source": "莽过教育·科目一·基础练习·第6章第3节·第37题，归档日期 2026-11-28；查看日期 2026-11-27；参考答案为来源所示。 来源URL：[来源题目](https://www.mangguojy.com/makeQuestion?sign=1&colId=2054907063989047296&colType=1&viewFlag=true&courseId=286c6b16260d4724970786bfccf75f1f)",
+      "sourceNote": "CPA学习/基金从业/科目一/知识点/06-内部控制.md",
+      "interactive": true,
+      "uncertain": false,
+      "knowledgeChapter": "第6章 基金管理人的合规管理、风险管理和内部控制",
+      "knowledgeChapterCode": "06",
+      "sectionCode": "03",
+      "section": "第3节 内部控制"
     },
     {
       "id": "7a0b6130225dba9ee8b4",
